@@ -1,0 +1,54 @@
+.footer {
+    background-color: #b59000;
+    color: white;
+    padding: 30px;
+    margin-top: 50px;
+  }
+  
+  .footer-columns {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+  }
+
+  .footer-column{
+    background-color: #000000;
+    padding: 15px;
+    border-radius: 10px; 
+  }
+  
+  .footer-column h4 {
+ 
+    margin-bottom: 15px;
+    font-size: 16px;
+  }
+  
+  .footer-column p, .footer-column input, .footer-column button {
+    margin-bottom: 10px;
+  }
+
+  .copyright{
+    background-color: #000000;
+    padding: 15px;
+    border-radius: 10px;
+  }
+  
+  input[type="email"] {
+    padding: 10px;
+    border-radius: 4px;
+    border: none;
+    width: 150px;
+  }
+  
+  button {
+    background-color: #e2b505;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    color: black;
+  }
+  
+  button:hover {
+    background-color: #e2b505;
+  }
+  

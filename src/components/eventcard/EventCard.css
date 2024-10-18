@@ -1,0 +1,39 @@
+.event-card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fff;
+    padding: 15px;
+    text-decoration: none;
+    color: black;
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .event-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .event-image img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+  }
+  
+  .event-details {
+    flex-grow: 1;
+    text-align: left;
+  }
+  
+  .event-details h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .event-details p {
+    margin: 5px 0;
+    font-size: 14px;
+  }
+  

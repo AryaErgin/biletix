@@ -1,0 +1,29 @@
+.filter-section {
+    .filters{
+        gap: 150px;
+        display: flex;
+        justify-content: center;   
+    }
+    .title{
+        gap: 60px;
+    }   
+  }
+  
+    
+  .filter-section select, .filter-section input {
+    padding: 15px;
+    border: 1px solid #ddd;
+    background-color: #f0f8ff;
+    border-radius: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  button {
+    background-color: #ffcb00;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 20px;
+  }
+  
