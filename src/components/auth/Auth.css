@@ -4,12 +4,12 @@
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: #fff; /* or your desired background color */
+    background-color: #fff;
 }
 
 h2 {
     text-align: center;
-    color: #333; /* Change to match your theme */
+    color: #333;
 }
 
 .return-home-btn {
@@ -19,12 +19,12 @@ h2 {
     margin-top: 20px;
     border: none;
     border-radius: 5px;
-    background-color: #007bff; /* Change to match your theme */
+    background-color: #007bff;
     color: white;
     cursor: pointer;
     font-size: 16px;
 }
 
 .return-home-btn:hover {
-    background-color: #0056b3; /* Darker shade on hover */
+    background-color: #0056b3;
 }

@@ -13,7 +13,7 @@ import Login from "./auth/Login";
 import Signup from "./auth/Signup";
 import Profile from "./auth/Profile";
 import CreateEvent from './eventcreation/CreateEvent';
-import { doc, getDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
 
 const App = () => {
     const [events, setEvents] = useState([]);
@@ -23,17 +23,19 @@ const App = () => {
     const [loading, setLoading] = useState(true);
   
     useEffect(() => {
-      const mockEvents = [
-        { id: 1, name: 'FRC 2025 Kickoff', location: 'Istanbul', date: '2025-01-10', imageUrl: '/event1.png', description: 'Join us for the exciting FRC 2025 kickoff in Istanbul.', link: '/event/1' },
-        { id: 2, name: 'Steam Workshop', location: 'Ankara', date: '2024-12-01', imageUrl: '/event2.png', description: 'Interactive Steam Workshop in Ankara for all ages.', link: '/event/2' },
-        { id: 3, name: 'Robotics Expo', location: 'Izmir', date: '2024-11-15', imageUrl: '/event3.png', description: 'Come experience the future of robotics in Izmir.', link: '/event/3' },
-        { id: 4, name: 'Tech Symposium', location: 'Istanbul', date: '2025-03-05', imageUrl: '/event4.png', description: 'Tech Symposium featuring top industry speakers in Istanbul.', link: '/event/4' },
-        { id: 5, name: 'Game Dev Meetup', location: 'Ankara', date: '2025-02-20', imageUrl: '/event5.png', description: 'A must-attend for all game developers.', link: '/event/5' },
-        { id: 6, name: 'AI Conference', location: 'Istanbul', date: '2025-04-10', imageUrl: '/event6.png', description: 'AI and machine learning conference in the heart of Istanbul.', link: '/event/6' },
-      ];
-      setEvents(mockEvents);
-      setFilteredEvents(mockEvents);
-    }, []);
+      const fetchEvents = async () => {
+          const eventsCollection = collection(db, 'events');
+          const eventsSnapshot = await getDocs(eventsCollection);
+          const eventsList = eventsSnapshot.docs.map(doc => ({
+              id: doc.id,
+              ...doc.data() 
+          }));
+          setEvents(eventsList);
+          setFilteredEvents(eventsList);
+      };
+
+      fetchEvents();
+  }, []);
 
     
 
