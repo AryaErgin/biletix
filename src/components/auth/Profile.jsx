@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { auth } from "../../firebase";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const currentUser = auth.currentUser;
@@ -11,6 +13,7 @@ const Profile = () => {
 
   const handleLogout = () => {
     auth.signOut();
+    navigate("/");
   };
 
   return (

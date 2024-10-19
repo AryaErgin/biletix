@@ -4,6 +4,8 @@ import FilterSection from './filtersection/FilterSection.jsx';
 import Footer from './footer/Footer.jsx';
 import Search from './search/Search.jsx';
 import './App.css';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../firebase';
 import { ConvexProvider } from "convex/react";
 import convex from "../convex";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
@@ -14,6 +16,7 @@ import Profile from "./auth/Profile";
 const App = () => {
     const [events, setEvents] = useState([]);
     const [filteredEvents, setFilteredEvents] = useState([]);
+    const [user, setUser] = useState(null);
   
     useEffect(() => {
       const mockEvents = [
@@ -26,6 +29,18 @@ const App = () => {
       ];
       setEvents(mockEvents);
       setFilteredEvents(mockEvents);
+    }, []);
+
+    useEffect(() => {
+      const unsubscribe = onAuthStateChanged(auth, (user) => {
+        if (user) {
+          setUser(user);
+        } else {
+          setUser(null);
+        }
+      });
+  
+      return () => unsubscribe();
     }, []);
   
     const handleSearch = (query) => {
@@ -44,6 +59,8 @@ const App = () => {
       });
       setFilteredEvents(filtered);
     };
+
+    
   
     return (
       <ConvexProvider client={convex}>
@@ -56,8 +73,16 @@ const App = () => {
                   <Link to="/">Events</Link>
                   <Link to="#about">About Us</Link>
                   <Link to="#contact">Contact</Link>
-                  <Link to="/login">Login</Link>
-                  <Link to="/signup">Sign Up</Link>
+                  {user ? (
+                      <>
+                      <Link to="/profile">Profile</Link>
+                      </>
+                      ) : (
+                       <>
+                        <Link to="/login">Login</Link>
+                        <Link to="/signup">Sign Up</Link>
+                      </>
+                    )}
                   </nav>
                 </div>
               </header>
