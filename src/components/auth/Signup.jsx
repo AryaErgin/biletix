@@ -21,6 +21,7 @@ const Signup = () => {
         await setDoc(doc(db, "users", user.uid), {
             email: user.email,
             createdAt: new Date(),
+            isAdmin: false,
         });
         navigate("/profile"); 
         

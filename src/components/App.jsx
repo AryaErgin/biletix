@@ -5,18 +5,22 @@ import Footer from './footer/Footer.jsx';
 import Search from './search/Search.jsx';
 import './App.css';
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../firebase';
+import { auth, db } from '../firebase';
 import { ConvexProvider } from "convex/react";
 import convex from "../convex";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import Login from "./auth/Login";
 import Signup from "./auth/Signup";
 import Profile from "./auth/Profile";
+import CreateEvent from './eventcreation/CreateEvent';
+import { doc, getDoc } from 'firebase/firestore';
 
 const App = () => {
     const [events, setEvents] = useState([]);
     const [filteredEvents, setFilteredEvents] = useState([]);
     const [user, setUser] = useState(null);
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [loading, setLoading] = useState(true);
   
     useEffect(() => {
       const mockEvents = [
@@ -31,6 +35,8 @@ const App = () => {
       setFilteredEvents(mockEvents);
     }, []);
 
+    
+
     useEffect(() => {
       const unsubscribe = onAuthStateChanged(auth, (user) => {
         if (user) {
@@ -39,9 +45,30 @@ const App = () => {
           setUser(null);
         }
       });
+        return () => unsubscribe();
+      }, []);
+      
+      useEffect(() => {
+        const checkAdminStatus = async () => {
+          const user = auth.currentUser;
+          if (user) {
+              const docRef = doc(db, "users", user.uid);
+              const docSnap = await getDoc(docRef);
+              if (docSnap.exists() && docSnap.data().isAdmin) {
+                  setIsAdmin(true);
+              } else {
+                  setIsAdmin(false);
+              }
+          } else {
+            setIsAdmin(false);
+          }
+          setLoading(false);
+      };
   
-      return () => unsubscribe();
-    }, []);
+      checkAdminStatus();
+      })
+  
+     
   
     const handleSearch = (query) => {
       const filtered = events.filter(event =>
@@ -68,13 +95,14 @@ const App = () => {
             <div className="App">
               <header className="main-header">
                 <div className="nav-container">
-                  <h1 className="logo">SteamNearMe</h1>
+                  <h1 className="logo">INTEGRA</h1>
                   <nav>
                   <Link to="/">Events</Link>
                   <Link to="#about">About Us</Link>
                   <Link to="#contact">Contact</Link>
                   {user ? (
                       <>
+                      {isAdmin && !loading && <Link to="/create-event">Create Event</Link>}
                       <Link to="/profile">Profile</Link>
                       </>
                       ) : (
@@ -106,6 +134,7 @@ const App = () => {
                         <Route path="/login" element={<Login />} />
                         <Route path="/signup" element={<Signup />} />
                         <Route path="/profile" element={<Profile />} />
+                        {isAdmin && <Route path="/create-event" element={<CreateEvent />} />}
                     </Routes>
             </div>
           </Router>
