@@ -4,6 +4,12 @@ import FilterSection from './filtersection/FilterSection.jsx';
 import Footer from './footer/Footer.jsx';
 import Search from './search/Search.jsx';
 import './App.css';
+import { ConvexProvider } from "convex/react";
+import convex from "../convex";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import Login from "./auth/Login";
+import Signup from "./auth/Signup";
+import Profile from "./auth/Profile";
 
 const App = () => {
     const [events, setEvents] = useState([]);
@@ -22,10 +28,9 @@ const App = () => {
       setFilteredEvents(mockEvents);
     }, []);
   
-    // Handle filtering events by search query
     const handleSearch = (query) => {
       const filtered = events.filter(event =>
-        event.name.toLowerCase().includes(query.toLowerCase()) // Match event names with the query
+        event.name.toLowerCase().includes(query.toLowerCase())
       );
       setFilteredEvents(filtered);
     };
@@ -41,29 +46,45 @@ const App = () => {
     };
   
     return (
-      <div className="App">
-        <header className="main-header">
-          <div className="nav-container">
-            <h1 className="logo">SteamNearMe</h1>
-            <nav>
-              <a href="#about">About Us</a>
-              <a href="#contact">Contact</a>
-              <a href="#login">Login / Sign Up</a>
-            </nav>
-          </div>
-        </header>
-  
-        {/* Integrate the Search component */}
-        <Search onSearch={handleSearch} />
-  
-        <FilterSection onFilter={handleFilter} />
-        <div className="event-grid">
-          {filteredEvents.map(event => (
-            <EventCard key={event.id} event={event} />
-          ))}
-        </div>
-        <Footer />
-      </div>
+      <ConvexProvider client={convex}>
+          <Router>
+            <div className="App">
+              <header className="main-header">
+                <div className="nav-container">
+                  <h1 className="logo">SteamNearMe</h1>
+                  <nav>
+                  <Link to="/">Events</Link>
+                  <Link to="#about">About Us</Link>
+                  <Link to="#contact">Contact</Link>
+                  <Link to="/login">Login</Link>
+                  <Link to="/signup">Sign Up</Link>
+                  </nav>
+                </div>
+              </header>
+          
+              <Routes>
+                        <Route 
+                            path="/" 
+                            element={
+                                <>
+                                    <Search onSearch={handleSearch} />
+                                    <FilterSection onFilter={handleFilter} />
+                                    <div className="event-grid">
+                                        {filteredEvents.map(event => (
+                                            <EventCard key={event.id} event={event} />
+                                        ))}
+                                    </div>
+                                    <Footer />
+                                </>
+                            } 
+                        />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/signup" element={<Signup />} />
+                        <Route path="/profile" element={<Profile />} />
+                    </Routes>
+            </div>
+          </Router>
+        </ConvexProvider>
     );
   };
   
