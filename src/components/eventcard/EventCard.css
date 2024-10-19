@@ -1,9 +1,10 @@
 .event-card {
     display: flex;
     flex-direction: column;
-    border: 1px solid #ddd;
-    border-radius: 10px;
     background-color: #fff;
+    border: 2px solid #ffcc00;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     padding: 15px;
     text-decoration: none;
     color: black;

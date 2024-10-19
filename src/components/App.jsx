@@ -14,6 +14,7 @@ import Signup from "./auth/Signup";
 import Profile from "./auth/Profile";
 import CreateEvent from './eventcreation/CreateEvent';
 import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
+import EventDetail from './eventdetail/EventDetail.jsx';
 
 const App = () => {
     const [events, setEvents] = useState([]);
@@ -137,6 +138,7 @@ const App = () => {
                         <Route path="/signup" element={<Signup />} />
                         <Route path="/profile" element={<Profile />} />
                         {isAdmin && <Route path="/create-event" element={<CreateEvent />} />}
+                        <Route path="/event/:eventId" element={<EventDetail />} />
                     </Routes>
             </div>
           </Router>

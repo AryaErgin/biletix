@@ -30,7 +30,7 @@ const Signup = () => {
     }
 };
   return (
-    <div>
+    <div className="auth-container">
       <h2>Signup</h2>
       {error && <p>{error}</p>}
       <form onSubmit={handleSignup}>
@@ -50,6 +50,9 @@ const Signup = () => {
         />
         <button type="submit">Signup</button>
       </form>
+      <div className="switch-auth">
+          <p>Already have an account? <a href="/login">Login</a></p>
+      </div>
     </div>
   );
 };
