@@ -11,28 +11,40 @@ const CreateEvent = () => {
   const [name, setName] = useState('');
   const [location, setLocation] = useState('');
   const [date, setDate] = useState('');
-  const [image, setImage] = useState(null);
+  const [media, setMedia] = useState([]);
   const [description, setDescription] = useState('');
+  const [thumbnailIndex, setThumbnailIndex] = useState(null);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
   const navigate = useNavigate();
 
-  const handleImageChange = (e) => {
-    if (e.target.files[0]) {
-      setImage(e.target.files[0]);
-    }
+  const handleMediaChange = (e) => {
+    const files = Array.from(e.target.files);
+    setMedia((prevMedia) => [...prevMedia, ...files]);
   };
-  
+
+  const handleSelectThumbnail = (index) => {
+    setThumbnailIndex(index);
+  };
+
   const handleCreateEvent = async (e) => {
     e.preventDefault();
     try {
-      let imageUrl = placeholder;
-      if (image) {
-        const uniqueImageName = `${uuidv4()}_${image.name}`;
-        const imageRef = ref(storage, `events/${uniqueImageName}`);
-        await uploadBytes(imageRef, image);
-        imageUrl = await getDownloadURL(imageRef);
+      let mediaUrls = [];
+      let thumbnailUrl = placeholder;
+
+      for (let i = 0; i < media.length; i++) {
+        const file = media[i];
+        const uniqueFileName = `${uuidv4()}_${file.name}`;
+        const fileRef = ref(storage, `events/${uniqueFileName}`);
+        await uploadBytes(fileRef, file);
+        const fileUrl = await getDownloadURL(fileRef);
+        mediaUrls.push(fileUrl);
+
+        if (i === thumbnailIndex) {
+          thumbnailUrl = fileUrl; 
+        }
       }
 
       await addDoc(collection(db, 'events'), {
@@ -40,8 +52,10 @@ const CreateEvent = () => {
         location,
         date,
         description,
-        imageUrl,
+        mediaUrls,
+        thumbnailUrl,
       });
+
       setSuccess('Event created successfully!');
       setError('');
       setTimeout(() => {
@@ -59,10 +73,27 @@ const CreateEvent = () => {
       {error && <p className="error">{error}</p>}
       {success && <p className="success">{success}</p>}
       <form onSubmit={handleCreateEvent}>
-      <label>
-          Upload Event Image:
-          <input type="file" accept="image/*" onChange={handleImageChange} />
+        <label>
+          Upload Event Media:
+          <input type="file" accept="image/*,video/*" multiple onChange={handleMediaChange} />
         </label>
+        <div className="media-preview">
+          {media.map((file, index) => (
+            <div
+              key={index}
+              className={`media-item ${index === thumbnailIndex ? 'selected-thumbnail' : ''}`}
+              onClick={() => handleSelectThumbnail(index)} // Set selected thumbnail on click
+            >
+              {file.type.startsWith('image') ? (
+                <img src={URL.createObjectURL(file)} alt="preview" className="preview-image" />
+              ) : (
+                <video className="preview-video" controls>
+                  <source src={URL.createObjectURL(file)} />
+                </video>
+              )}
+            </div>
+          ))}
+        </div>
         <input
           type="text"
           value={name}

@@ -101,17 +101,17 @@ const App = () => {
                   <h1 className="logo">INTEGRA</h1>
                   <nav>
                   <Link to="/">Events</Link>
-                  <Link to="#about">About Us</Link>
-                  <Link to="#contact">Contact</Link>
+                  <Link to="#hakkimizda">Hakkımızda</Link>
+                  <Link to="#iletişim">İletişime Geçin</Link>
                   {user ? (
                       <>
-                      {isAdmin && !loading && <Link to="/create-event">Create Event</Link>}
-                      <Link to="/profile">Profile</Link>
+                      {isAdmin && !loading && <Link to="/create-event">Etkinlik Oluştur</Link>}
+                      <Link to="/profil">Profil</Link>
                       </>
                       ) : (
                        <>
-                        <Link to="/login">Login</Link>
-                        <Link to="/signup">Sign Up</Link>
+                        <Link to="/giriş-yap">Giriş Yap</Link>
+                        <Link to="/hesap-oluştur">Hesap Oluştur</Link>
                       </>
                     )}
                   </nav>
@@ -134,9 +134,9 @@ const App = () => {
                                 </>
                             } 
                         />
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/signup" element={<Signup />} />
-                        <Route path="/profile" element={<Profile />} />
+                        <Route path="/giriş-yap" element={<Login />} />
+                        <Route path="/hesap-oluştur" element={<Signup />} />
+                        <Route path="/profil" element={<Profile />} />
                         {isAdmin && <Route path="/create-event" element={<CreateEvent />} />}
                         <Route path="/event/:eventId" element={<EventDetail />} />
                     </Routes>

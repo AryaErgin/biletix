@@ -7,23 +7,22 @@ const Footer = () => {
       <div className="footer-columns">
         <div className="footer-column">
           <h4>INTEGRA Etkinlik Sayfası</h4>
-          <p>About Us</p>
-          <p>Contact</p>
-          <p>Help</p>
+          <p>Hakkımızda</p>
+          <p>İletişime Geçin</p>
         </div>
         <div className="footer-column">
-          <h4>Plan Your Event</h4>
-          <p>Create Event</p>
-          <p>Manage Events</p>
+          <h4>Dorem Ipsum</h4>
+          <p>Suscipit Sodales</p>
+          <p>Nec Placerat</p>
         </div>
         <div className="footer-column">
-          <h4>Get the Latest Updates</h4>
+          <h4>Yeni Etkinliklerden Haberdar Ol</h4>
           <input type="email" placeholder="Your email" />
           <button>Subscribe</button>
         </div>
       </div>
       <div className='copyright'>
-      <p>&copy; Copyright 2024 Created by INTEGRA 3646</p>
+      <p>&copy; Copyright 2024 INTEGRA 3646 Tarafından Oluşturuldu</p>
       </div>
     </footer>
   );
