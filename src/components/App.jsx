@@ -6,8 +6,6 @@ import Search from './search/Search.jsx';
 import './App.css';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from '../firebase';
-import { ConvexProvider } from "convex/react";
-import convex from "../convex";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import Login from "./auth/Login";
 import Signup from "./auth/Signup";
@@ -93,56 +91,54 @@ const App = () => {
     
   
     return (
-      <ConvexProvider client={convex}>
-          <Router>
-            <div className="App">
-              <header className="main-header">
-                <div className="nav-container">
-                  <h1 className="logo">INTEGRA</h1>
-                  <nav>
-                  <Link to="/">Events</Link>
-                  <Link to="#hakkimizda">Hakkımızda</Link>
-                  <Link to="#iletişim">İletişime Geçin</Link>
-                  {user ? (
-                      <>
-                      {isAdmin && !loading && <Link to="/create-event">Etkinlik Oluştur</Link>}
-                      <Link to="/profil">Profil</Link>
-                      </>
-                      ) : (
-                       <>
-                        <Link to="/giriş-yap">Giriş Yap</Link>
-                        <Link to="/hesap-oluştur">Hesap Oluştur</Link>
-                      </>
-                    )}
-                  </nav>
-                </div>
-              </header>
+        <Router>
+          <div className="App">
+            <header className="main-header">
+              <div className="nav-container">
+                <h1 className="logo">INTEGRA</h1>
+                <nav>
+                <Link to="/">Events</Link>
+                <Link to="#hakkimizda">Hakkımızda</Link>
+                <Link to="#iletişim">İletişime Geçin</Link>
+                {user ? (
+                    <>
+                    {isAdmin && !loading && <Link to="/create-event">Etkinlik Oluştur</Link>}
+                    <Link to="/profil">Profil</Link>
+                    </>
+                    ) : (
+                     <>
+                      <Link to="/giriş-yap">Giriş Yap</Link>
+                      <Link to="/hesap-oluştur">Hesap Oluştur</Link>
+                    </>
+                  )}
+                </nav>
+              </div>
+            </header>
           
-              <Routes>
-                        <Route 
-                            path="/" 
-                            element={
-                                <>
-                                    <Search onSearch={handleSearch} />
-                                    <FilterSection onFilter={handleFilter} />
-                                    <div className="event-grid">
-                                        {filteredEvents.map(event => (
-                                            <EventCard key={event.id} event={event} />
-                                        ))}
-                                    </div>
-                                    <Footer />
-                                </>
-                            } 
-                        />
-                        <Route path="/giriş-yap" element={<Login />} />
-                        <Route path="/hesap-oluştur" element={<Signup />} />
-                        <Route path="/profil" element={<Profile />} />
-                        {isAdmin && <Route path="/create-event" element={<CreateEvent />} />}
-                        <Route path="/event/:eventId" element={<EventDetail />} />
-                    </Routes>
-            </div>
-          </Router>
-        </ConvexProvider>
+            <Routes>
+              <Route 
+                path="/" 
+                element={
+                  <>
+                    <Search onSearch={handleSearch} />
+                    <FilterSection onFilter={handleFilter} />
+                    <div className="event-grid">
+                      {filteredEvents.map(event => (
+                        <EventCard key={event.id} event={event} />
+                      ))}
+                    </div>
+                    <Footer />
+                  </>
+                } 
+                />
+              <Route path="/giriş-yap" element={<Login />} />
+              <Route path="/hesap-oluştur" element={<Signup />} />
+              <Route path="/profil" element={<Profile />} />
+              {isAdmin && <Route path="/create-event" element={<CreateEvent />} />}
+              <Route path="/event/:eventId" element={<EventDetail />} />
+            </Routes>
+          </div>
+        </Router>
     );
   };
   

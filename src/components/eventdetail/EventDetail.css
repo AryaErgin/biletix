@@ -42,7 +42,7 @@ body {
     border-radius: 15px;
     border: 5px solid #ffcc00;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .nav-button {
