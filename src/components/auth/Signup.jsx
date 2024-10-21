@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { auth } from "../../firebase";
+import { auth, googleProvider } from "../../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../firebase"; 
 import { useNavigate } from "react-router-dom";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import './Auth.css';
+import { googleLogo } from "../../photos";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -29,10 +30,32 @@ const Signup = () => {
         setError(error.message);
     }
 };
+
+const handleGoogleSignup = async () => {
+  try {
+    const result = await signInWithPopup(auth, googleProvider);
+    const user = result.user;
+    navigate("/profile"); 
+
+    await setDoc(doc(db, "users", user.uid), {
+      email: user.email,
+      createdAt: new Date(),
+      isAdmin: false,
+    });
+    navigate("/profile");
+  } catch (error) {
+    setError(error.message);
+  }
+};
+
   return (
     <div className="auth-container">
-      <h2>Signup</h2>
+      <h2>Hesap Oluştur</h2>
       {error && <p>{error}</p>}
+      <button className="google-signin" onClick={handleGoogleSignup}>
+        <img src={googleLogo} alt="Google logo" className="google-logo" />
+        Gmail ile Hesap Oluştur
+      </button>
       <form onSubmit={handleSignup}>
         <input
           type="email"
@@ -48,10 +71,10 @@ const Signup = () => {
           placeholder="Password"
           required
         />
-        <button type="submit">Signup</button>
+        <button type="submit" className="Confirm">Hesap Oluştur</button>
       </form>
       <div className="switch-auth">
-          <p>Already have an account? <a href="/login">Login</a></p>
+          <p>Zaten hesabınız var mı?<a href="/login">Giriş Yap</a></p>
       </div>
     </div>
   );
