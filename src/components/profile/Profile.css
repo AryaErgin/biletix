@@ -1,0 +1,300 @@
+.profile-container {
+  max-width: 50rem;
+  margin: 3.75rem auto;
+  padding: 2.5rem;
+  background: linear-gradient(145deg, #ffffff, #f3f3f3);
+  border-radius: 1.25rem;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.profile-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0.25rem;
+  background: linear-gradient(90deg, #ffcc00, #ffd700);
+}
+
+.profile-container h2 {
+  text-align: center;
+  color: #2c3e50;
+  font-size: 2.5rem;
+  margin-bottom: 2.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.125rem;
+}
+
+.profile-info {
+  margin-bottom: 2.5rem;
+}
+
+.info-group {
+  margin-bottom: 1.5rem;
+  padding: 1.25rem;
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.info-group:hover {
+  transform: translateY(-0.25rem);
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+}
+
+.info-group label {
+  display: block;
+  font-weight: 600;
+  color: #7f8c8d;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.0625rem;
+}
+
+.info-group p {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+
+.verification-status {
+  padding: 1rem;
+  border-radius: 0.75rem;
+  text-align: center;
+  margin: 1.25rem 0;
+  font-weight: 600;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+}
+
+.verified {
+  background-color: rgba(46, 213, 115, 0.15);
+  color: #2ed573;
+  border: 0.0625rem solid rgba(46, 213, 115, 0.3);
+}
+
+.not-verified {
+  background-color: rgba(255, 71, 87, 0.15);
+  color: #ff4757;
+  border: 0.0625rem solid rgba(255, 71, 87, 0.3);
+}
+
+.profile-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.profile-actions button {
+  padding: 1rem;
+  border: none;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.0625rem;
+}
+
+.password-reset-btn {
+  background: linear-gradient(135deg, #ffcc00, #ffd700);
+  color: #2c3e50;
+}
+
+.password-reset-btn:hover {
+  background: linear-gradient(135deg, #ffd700, #ffcc00);
+  transform: translateY(-0.25rem);
+  box-shadow: 0 0.5rem 1rem rgba(255, 204, 0, 0.2);
+}
+
+.password-reset-btn:disabled {
+  background: #e0e0e0;
+  color: #999;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.logout-btn {
+  background: linear-gradient(135deg, #ff4757, #ff6b81);
+  color: white;
+}
+
+.logout-btn:hover {
+  background: linear-gradient(135deg, #ff6b81, #ff4757);
+  transform: translateY(-0.25rem);
+  box-shadow: 0 0.5rem 1rem rgba(255, 71, 87, 0.2);
+}
+
+.delete-account-btn {
+  background: linear-gradient(135deg, #2c3e50, #34495e);
+  color: white;
+}
+
+.delete-account-btn:hover {
+  background: linear-gradient(135deg, #34495e, #2c3e50);
+  transform: translateY(-0.25rem);
+  box-shadow: 0 0.5rem 1rem rgba(44, 62, 80, 0.2);
+}
+
+.delete-account-btn:disabled {
+  background: #e0e0e0;
+  color: #999;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.delete-confirm {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  background-color: rgba(255, 71, 87, 0.1);
+  border: 0.0625rem solid rgba(255, 71, 87, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.delete-confirm p {
+  color: #ff4757;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.passwordinp {
+  width: 100%;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 0.0625rem solid #ddd;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  background-color: white;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+}
+
+.passwordinp:focus {
+  border-color: #ffcc00;
+  outline: none;
+  box-shadow: 0 0 0 0.25rem rgba(255, 204, 0, 0.1);
+}
+
+.delete-confirm button {
+  width: 100%;
+  padding: 1rem;
+  margin: 0.5rem 0;
+  border: none;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.0625rem;
+}
+
+.delete-confirm button:first-of-type {
+  background: linear-gradient(135deg, #ff4757, #ff6b81);
+  color: white;
+}
+
+.delete-confirm button:first-of-type:hover {
+  background: linear-gradient(135deg, #ff6b81, #ff4757);
+  transform: translateY(-0.25rem);
+  box-shadow: 0 0.5rem 1rem rgba(255, 71, 87, 0.2);
+}
+
+.delete-confirm button:last-of-type {
+  background: linear-gradient(135deg, #7f8c8d, #95a5a6);
+  color: white;
+}
+
+.delete-confirm button:last-of-type:hover {
+  background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+  transform: translateY(-0.25rem);
+  box-shadow: 0 0.5rem 1rem rgba(127, 140, 141, 0.2);
+}
+
+.error-message,
+.success-message {
+  padding: 1rem;
+  border-radius: 0.75rem;
+  margin-top: 1.25rem;
+  text-align: center;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.error-message {
+  background-color: rgba(255, 71, 87, 0.15);
+  color: #ff4757;
+  border: 0.0625rem solid rgba(255, 71, 87, 0.3);
+}
+
+.success-message {
+  background-color: rgba(46, 213, 115, 0.15);
+  color: #2ed573;
+  border: 0.0625rem solid rgba(46, 213, 115, 0.3);
+}
+
+.profile-loading {
+  text-align: center;
+  padding: 2.5rem;
+  font-size: 1.25rem;
+  color: #7f8c8d;
+}
+
+
+@media (max-width: 48rem) {
+  .profile-container {
+      margin: 1.5rem;
+      padding: 1.5rem;
+  }
+
+  .profile-container h2 {
+      font-size: 2rem;
+  }
+
+  .info-group {
+      padding: 1rem;
+      margin-bottom: 1rem;
+  }
+
+  .profile-actions {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem;
+  }
+
+  .profile-actions button {
+      padding: 0.75rem;
+      font-size: 0.875rem;
+  }
+
+  .delete-confirm {
+      margin-top: 1rem;
+      padding: 1rem;
+  }
+
+  .delete-confirm p {
+      font-size: 0.875rem;
+  }
+
+  .delete-confirm button {
+    padding: 0.75rem;
+    font-size: 0.875rem;
+  }
+}

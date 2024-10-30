@@ -1,0 +1,312 @@
+* {
+  box-sizing: border-box;
+}
+
+.filter-section {
+  padding: 3.125rem 5%;
+  background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.title h1 {
+  font-size: 2.5rem;
+  color: #333;
+  margin: 0;
+  font-weight: 700;
+  text-shadow: 0.125rem 0.125rem 0.25rem rgba(0,0,0,0.1);
+}
+
+.filters {
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1.25rem;
+  padding: 1.875rem 1.25rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 1.25rem;
+  box-shadow: 0 0.625rem 1.875rem rgba(0, 0, 0, 0.1);
+}
+
+.filter-location,
+.filter-date {
+  margin-top: 2rem;
+  flex: 1;
+  min-width: 0; 
+}
+
+.locinp,
+.dateinp {
+  width: 100%;
+  padding: 1.25rem 0.625rem;
+  font-size: 0.9rem;
+  border: 0.125rem solid #ddd;
+  border-radius: 3.125rem;
+  background-color: white;
+  transition: all 0.3s ease;
+  color: #333;
+}
+
+.locinp:focus,
+.dateinp:focus {
+  outline: none;
+  border-color: #c9a200;
+  box-shadow: 0 0 0 0.1875rem rgba(201, 162, 0, 0.2);
+}
+
+.filter-button {
+  background: linear-gradient(45deg, #ffd900, #fed718);
+  color: #000;
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding: 0.9375rem 1.875rem;
+  border: none;
+  border-radius: 3.125rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0.25rem 0.9375rem rgba(201, 162, 0, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.0625rem;
+  margin: 0 auto;
+  width: 90%;
+}
+
+.filter-button:hover {
+  background: #000;
+  position: relative;
+  z-index: 1;
+  transform: translateY(-0.125rem);
+}
+
+.filter-button:hover::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(45deg, #ffd700, #ffec8b);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  z-index: 2;
+}
+
+.filter-button:active {
+  transform: translateY(0.0625rem);
+  box-shadow: 0 0.125rem 0.625rem rgba(201, 162, 0, 0.4);
+}
+
+.filters label input[type="number"],
+.filters label select {
+  width: 100%;
+  padding: 1.25rem 0.625rem;
+  font-size: 0.9rem;
+  border: 0.125rem solid #ddd;
+  border-radius: 3.125rem;
+  background-color: white;
+  transition: all 0.3s ease;
+  color: #333;
+  margin-top: 2rem;
+}
+
+.filters label input[type="number"]:focus,
+.filters label select:focus {
+  outline: none;
+  border-color: #c9a200;
+  box-shadow: 0 0 0 0.1875rem rgba(201, 162, 0, 0.2);
+}
+
+/* Style for the select dropdown arrow */
+.filters label select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1em;
+  padding-right: 2.5rem;
+}
+
+.filter-organizer {
+  margin-top: 2rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.orginp {
+  width: 100%;
+  padding: 1.25rem 0.625rem;
+  font-size: 0.9rem;
+  border: 0.125rem solid #ddd;
+  border-radius: 3.125rem;
+  background-color: white;
+  transition: all 0.3s ease;
+  color: #333;
+}
+
+.orginp:focus {
+  outline: none;
+  border-color: #c9a200;
+  box-shadow: 0 0 0 0.1875rem rgba(201, 162, 0, 0.2);
+}
+
+@media (max-width: 64rem) {
+  .filter-section { 
+    padding: 8rem 3%; 
+  }
+  
+  .filters {
+    gap: 0.625rem;
+    padding: 1.25rem;
+  }
+  
+  .filter-location,
+  .filter-date {
+    margin-top: 1rem;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+  
+  .filter-button {
+    padding: 0.75rem 1.5625rem;
+    font-size: 1.1rem;
+  }
+
+  .filters label input[type="number"],
+  .filters label select {
+    margin-top: 1rem;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+
+  .filter-organizer {
+    margin-top: 1rem;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 48rem) {
+  .filter-section {
+    padding: 6rem 3%;
+  }
+  
+  .title h1 {
+    font-size: 2.2rem;
+  }
+  
+  .filters {
+    flex-direction: column;
+    gap: 0.625rem;
+    padding: 0.9375rem;
+  }
+  
+  .filter-location,
+  .filter-date {
+    margin-top: 0.5rem;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+  
+  .locinp,
+  .dateinp {
+    padding: 0.9375rem 0.625rem;
+    font-size: 1.1rem;
+    min-height: 3rem;
+  }
+  
+  .filter-button {
+    width: 90%;
+    margin: 1rem auto;
+    padding: 1rem;
+    font-size: 1.1rem;
+    min-height: 3rem;
+  }
+  
+  .filters label input[type="number"],
+  .filters label select {
+    padding: 0.9375rem 0.625rem;
+    font-size: 1.1rem;
+    min-height: 3rem;
+  }
+
+  .filter-organizer {
+    margin-top: 0.5rem;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+  
+  .orginp {
+    padding: 0.9375rem 0.625rem;
+    font-size: 1.1rem;
+    min-height: 3rem;
+  }
+}
+
+@media (max-width: 30rem) {
+  .filter-section {
+    padding: 4rem 2%;
+  }
+  
+  .title h1 {
+    font-size: 1.9rem;
+  }
+  
+  .filters {
+    padding: 0.625rem;
+  }
+  
+  .filter-location,
+  .filter-date {
+    margin-top: 0.2rem;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0.2rem;
+  }
+  
+  .locinp,
+  .dateinp {
+    padding: 0.875rem;
+    font-size: 1rem;
+    min-height: 2.75rem;
+  }
+  
+  .filter-button {
+    width: 90%;
+    padding: 0.875rem;
+    font-size: 1rem;
+    min-height: 2.75rem;
+  }
+  
+  .filters label input[type="number"],
+  .filters label select {
+    padding: 0.875rem;
+    font-size: 1rem;
+    min-height: 2.75rem;
+  }
+
+  .filter-organizer {
+    margin-top: 0.2rem;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0.2rem;
+  }
+  
+  .orginp {
+    padding: 0.875rem;
+    font-size: 1rem;
+    min-height: 2.75rem;
+  }
+}

@@ -1,0 +1,455 @@
+.create-event {
+  max-width: 50rem;
+  margin: 2.5rem auto;
+  padding: 2.5rem;
+  background-color: #ffffff;
+  border-radius: 0.9375rem;
+  box-shadow: 0 0.25rem 1.25rem rgba(0, 0, 0, 0.1);
+}
+
+.create-event h2 {
+  text-align: center;
+  margin-bottom: 1.875rem;
+  color: #000;
+  font-size: 3rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.125rem;
+}
+
+.create-event form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.create-event form input[type="text"],
+.create-event form input[type="file"] {
+  width: calc(100% - 1.875rem);
+  padding: 0.9375rem;
+  border: 0.125rem solid #ffd900;
+  border-radius: 0.625rem;
+  font-size: 1.5rem;
+  background-color: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.1);
+}
+
+.create-event form input[type="text"]:focus {
+  outline: none;
+  border-color: #fed718;
+  box-shadow: 0 0 0.625rem rgba(255, 217, 0, 0.3);
+}
+
+.create-event form textarea {
+  width: calc(100% - 1.875rem);
+  padding: 0.9375rem;
+  border: 0.0625rem solid #fed718;
+  border-radius: 0.25rem;
+  font-size: 1.6875rem;
+  background-color: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 0.625rem rgba(255, 217, 0, 0.3);
+}
+
+.create-event form input[type="date"]{
+  width: calc(100% - 1.875rem);
+  padding: 0.9375rem;
+  border: 0.0625rem solid #fed718;
+  border-radius: 0.25rem;
+  font-size: 1.6875rem;
+  background-color: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 0.625rem rgba(255, 217, 0, 0.3);
+}
+
+.create-event form input[type="file"] {
+  background: linear-gradient(45deg, #ffd900, #fed718);
+  color: #000;
+  cursor: pointer;
+  font-size: 1.125rem;
+  border: none;
+}
+
+.create-event form input[type="file"]::-webkit-file-upload-button {
+  background: #000;
+  color: #fff;
+  padding: 0.625rem 1.25rem;
+  border: none;
+  border-radius: 0.3125rem;
+  cursor: pointer;
+  margin-right: 0.625rem;
+}
+
+.create-event form textarea {
+  resize: vertical;
+  min-height: 15rem;
+}
+
+.submit {
+  background: linear-gradient(45deg, #ffd900, #fed718);
+  color: #000;
+  width: calc(100% - 1.875rem);
+  height: 4.375rem;
+  margin: 1.25rem auto;
+  border: none;
+  border-radius: 1.25rem;
+  cursor: pointer;
+  font-size: 1.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.0625rem;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.submit:hover {
+  background: #000;
+  color: #ffd900;
+}
+
+.media-preview {
+  margin-top: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9375rem;
+}
+
+.media-item {
+  display: flex;
+  align-items: center;
+  padding: 0.625rem;
+  border: 0.0625rem solid #ddd;
+  border-radius: 0.25rem;
+}
+
+.preview-image,
+.preview-video {
+  width: 6.25rem;
+  height: 6.25rem;
+  object-fit: cover;
+  margin-right: 0.9375rem;
+}
+
+.media-item-details {
+  flex-grow: 1;
+}
+
+.media-item-details span {
+  display: block;
+  margin-bottom: 0.3125rem;
+}
+
+.remove-button,
+.thumbnail-button {
+  padding: 0.5rem 0.75rem;
+  border: none;
+  border-radius: 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-right: 0.625rem;
+}
+
+.remove-button {
+  background-color: #ff4d4d;
+  color: white;
+}
+
+.remove-button:hover {
+  background-color: #ff3333;
+}
+
+.thumbnail-button {
+  background-color: #ffd900;
+  color: #000;
+}
+
+.thumbnail-button:hover {
+  background-color: #ffcc00;
+}
+
+.selected-thumbnail .thumbnail-button {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.selected-thumbnail .thumbnail-button:hover {
+  background-color: #45a049;
+}
+
+/* Location section */
+.location-section {
+  width: 100%;
+  margin: 1.25rem 0;
+}
+
+.map-container {
+  width: 100%;
+  height: 25rem;
+  margin-top: 1.25rem;
+  border-radius: 0.625rem;
+  overflow: hidden;
+}
+
+.create-event form input[type="number"],
+.create-event form select {
+  width: calc(100% - 1.875rem);
+  padding: 0.9375rem;
+  border: 0.125rem solid #ffd900;
+  border-radius: 0.625rem;
+  font-size: 1.5rem;
+  background-color: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.25rem;
+}
+
+.create-event form input[type="number"]:focus,
+.create-event form select:focus {
+  outline: none;
+  border-color: #fed718;
+  box-shadow: 0 0 0.625rem rgba(255, 217, 0, 0.3);
+}
+
+.create-event form select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1em;
+  padding-right: 2.5rem;
+}
+
+.message-container {
+  margin: 1.25rem 0;
+  padding: 1rem;
+  border-radius: 0.625rem;
+  text-align: center;
+  font-weight: 500;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-1.25rem);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.error {
+  background-color: rgba(255, 71, 87, 0.1);
+  color: #ff4757;
+  border: 0.0625rem solid rgba(255, 71, 87, 0.3);
+}
+
+.success {
+  background-color: rgba(46, 213, 115, 0.1);
+  color: #2ed573;
+  border: 0.0625rem solid rgba(46, 213, 115, 0.3);
+}
+
+.error p, .success p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.create-event form label {
+  display: block;
+  margin-bottom: 0.625rem;
+  font-size: 1.125rem;
+  color: #333;
+}
+
+@media (min-width: 90rem) {
+  .create-event {
+    max-width: 60rem;
+    padding: 3rem;
+  }
+
+  .create-event h2 {
+    font-size: 3.5rem;
+  }
+}
+
+@media (max-width: 89.9375rem) and (min-width: 64rem) {
+  .create-event {
+    max-width: 50rem;
+    padding: 2.5rem;
+  }
+
+  .create-event h2 {
+    font-size: 3rem;
+  }
+
+  .create-event form input[type="number"],
+  .create-event form select {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 63.9375rem) and (min-width: 48rem) {
+  .create-event {
+    max-width: 45rem;
+    padding: 2rem;
+    margin: 2rem auto;
+  }
+
+  .create-event h2 {
+    font-size: 2.5rem;
+  }
+
+  .submit {
+    height: 3.75rem;
+    font-size: 1.4rem;
+  }
+
+  .create-event form input[type="number"],
+  .create-event form select {
+    font-size: 1.3rem;
+    padding: 0.875rem;
+  }
+
+  .message-container {
+    margin: 1rem 0;
+    padding: 0.875rem;
+  }
+
+  .error p, .success p {
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 47.9375rem) and (min-width: 30.0625rem) {
+  .create-event {
+    max-width: 100%;
+    margin: 1.5rem;
+    padding: 1.5rem;
+  }
+
+  .create-event h2 {
+    font-size: 2rem;
+  }
+
+  .create-event form input[type="text"],
+  .create-event form input[type="file"] {
+    font-size: 1.2rem;
+    padding: 0.75rem;
+  }
+
+  .submit {
+    height: 3.25rem;
+    font-size: 1.2rem;
+  }
+
+  .create-event form input[type="number"],
+  .create-event form select {
+    font-size: 1.2rem;
+    padding: 0.75rem;
+  }
+}
+
+@media (max-width: 30rem) {
+  .create-event {
+    margin: 1rem;
+    padding: 1rem;
+  }
+
+  .create-event h2 {
+    font-size: 1.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .create-event form input[type="text"],
+  .create-event form input[type="file"],
+  .create-event form textarea {
+    font-size: 1rem;
+    padding: 0.625rem;
+  }
+
+  .submit {
+    height: 3rem;
+    font-size: 1rem;
+    border-radius: 0.625rem;
+  }
+
+  .message-container {
+    margin: 0.75rem 0;
+    padding: 0.75rem;
+  }
+
+  .error p, .success p {
+    font-size: 0.8125rem;
+  }
+}
+
+@media (max-width: 20rem) {
+  .create-event {
+    margin: 0.5rem;
+    padding: 0.75rem;
+  }
+
+  .create-event h2 {
+    font-size: 1.5rem;
+  }
+
+  .create-event form input[type="text"],
+  .create-event form input[type="file"],
+  .create-event form textarea {
+    font-size: 0.875rem;
+    padding: 0.5rem;
+  }
+
+  .submit {
+    height: 2.75rem;
+    font-size: 0.875rem;
+  }
+
+  .create-event form input[type="number"],
+  .create-event form select {
+    font-size: 0.875rem;
+    padding: 0.5rem;
+  }
+
+  .message-container {
+    margin: 0.5rem 0;
+    padding: 0.625rem;
+  }
+
+  .error p, .success p {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-height: 43.75rem) {
+  .create-event {
+    margin: 1rem auto;
+  }
+
+  .create-event form textarea {
+    min-height: 5rem;
+  }
+}
+
+@media (hover: hover) {
+  .submit:hover {
+    transform: translateY(-0.125rem);
+    box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.2);
+  }
+}
+
+
+@media (hover: none) {
+  .submit {
+    background: #000;
+    color: #ffd900;
+  }
+}

@@ -1,0 +1,15 @@
+{
+    "short_name": "MyApp",
+    "name": "My Application",
+    "icons": [
+      {
+        "src": "logo.ico",
+        "type": "image/x-icon",
+        "sizes": "192x192"
+      }
+    ],
+    "start_url": "/",
+    "background_color": "#FFFFFF",
+    "display": "standalone",
+    "theme_color": "#000000"
+  }

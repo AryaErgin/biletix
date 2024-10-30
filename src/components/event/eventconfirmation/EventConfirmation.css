@@ -1,0 +1,185 @@
+.event-confirmation {
+    padding: 1.25rem;
+    max-width: 75rem;
+    margin: 0 auto;
+}
+
+.event-confirmation h2 {
+    text-align: center;
+    color: #333;
+    font-size: 2.25rem;
+    margin-bottom: 1.875rem;
+}
+
+.pending-events-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    padding: 1.25rem;
+}
+
+/* Reusing EventCard styles for consistency */
+.pending-event-card {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border: 0.125rem solid #ffcc00;
+    border-radius: 0.9375rem;
+    box-shadow: 0 0.25rem 1.25rem rgba(0, 0, 0, 0.2);
+    padding: 0.9375rem;
+    text-decoration: none;
+    color: black;
+    transition: box-shadow 0.3s ease;
+}
+
+.pending-event-card:hover {
+    box-shadow: 0 0.375rem 1.5rem rgba(0, 0, 0, 0.25);
+    transform: translateY(-0.3125rem);
+    transition: all 0.3s ease;
+}
+
+.pending-event-card .event-image {
+    width: 100%;
+    height: 12.5rem;
+    overflow: hidden;
+    border-radius: 0.625rem;
+    margin-bottom: 0.9375rem;
+}
+
+.pending-event-card .event-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0.625rem;
+}
+
+.pending-event-card .event-details {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.pending-event-card .event-details h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.625rem;
+    color: #333;
+}
+
+.pending-event-card .event-details p {
+    margin: 0.3125rem 0;
+    font-size: 0.875rem;
+    color: #666;
+}
+
+/* Status badge */
+.status-badge {
+    display: inline-block;
+    padding: 0.3125rem 0.625rem;
+    border-radius: 0.9375rem;
+    font-size: 0.75rem;
+    font-weight: bold;
+    margin-bottom: 0.625rem;
+    background-color: #ffd700;
+    color: #000;
+}
+
+/* Responsive Design */
+
+/* Large Desktop Screens */
+@media (max-width: 75rem) {
+    .pending-events-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Tablets and small desktops */
+@media (max-width: 64rem) {
+    .pending-events-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .event-confirmation h2 {
+        font-size: 2rem;
+    }
+    .pending-event-card {
+        padding: 0.875rem;
+    }
+}
+
+/* Small tablets */
+@media (max-width: 48rem) {
+    .pending-events-grid {
+        grid-template-columns: 1fr;
+    }
+    .event-confirmation h2 {
+        font-size: 1.75rem;
+    }
+    .pending-event-card {
+        padding: 0.75rem;
+    }
+}
+
+/* Large phones */
+@media (max-width: 40rem) {
+    .event-confirmation h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .pending-event-card {
+        padding: 0.625rem;
+    }
+    .pending-event-card .event-details h3 {
+        font-size: 1.125rem;
+    }
+    .pending-event-card .event-details p {
+        font-size: 0.8125rem;
+    }
+    .status-badge {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+    }
+}
+
+/* Medium phones */
+@media (max-width: 30rem) {
+    .event-confirmation h2 {
+        font-size: 1.375rem;
+    }
+    .pending-event-card {
+        padding: 0.5rem;
+    }
+    .pending-event-card .event-image {
+        height: 10rem;
+    }
+    .pending-event-card .event-details h3 {
+        font-size: 1rem;
+    }
+    .pending-event-card .event-details p {
+        font-size: 0.75rem;
+    }
+}
+
+/* Small phones */
+@media (max-width: 20rem) {
+    .event-confirmation {
+        padding: 1rem 0.5rem;
+    }
+    .event-confirmation h2 {
+        font-size: 1.25rem;
+    }
+    .pending-event-card {
+        padding: 0.375rem;
+        border-radius: 0.625rem;
+    }
+    .pending-event-card .event-image {
+        height: 8rem;
+    }
+    .pending-event-card .event-details h3 {
+        font-size: 0.875rem;
+    }
+    .pending-event-card .event-details p {
+        font-size: 0.6875rem;
+    }
+    .status-badge {
+        font-size: 0.625rem;
+        padding: 0.1875rem 0.375rem;
+    }
+}
