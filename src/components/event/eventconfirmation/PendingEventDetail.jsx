@@ -200,24 +200,24 @@ const PendingEventDetail = () => {
 
       <div className="confirmation-buttons">
         <button className="approve-button" onClick={handleApprove}>
-          Approve Event
+          Onaylayın
         </button>
         <button className="disapprove-button" onClick={handleDisapprove}>
-          Disapprove Event
+          Reddedin
         </button>
       </div>
 
       {showRejectionModal && (
         <div className="rejection-modal">
-          <h3>Provide Reason for Rejection</h3>
+          <h3>Reddetme Sebebi Belirtiniz</h3>
           <textarea
             value={rejectionReason}
             onChange={(e) => setRejectionReason(e.target.value)}
             placeholder="Enter reason for rejection"
           />
           <div className="modal-buttons">
-            <button onClick={submitRejection}>Submit</button>
-            <button onClick={() => setShowRejectionModal(false)}>Cancel</button>
+            <button onClick={submitRejection}>Gönder</button>
+            <button onClick={() => setShowRejectionModal(false)}>İptal Et</button>
           </div>
         </div>
       )}

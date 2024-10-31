@@ -19,11 +19,44 @@ import PendingEventDetail from './event/eventconfirmation/PendingEventDetail.jsx
 import Header from './header/Header.jsx';
 import EmailVerification from './auth/EmailVerification.jsx';
 import { deleteUser } from 'firebase/auth';
-import MyEvents from './event/myevents/MyEvents.jsx'; 
+import MyEvents from './event/myevents/MyEvents.jsx';
 import { RejectedEventsProvider, useRejectedEvents } from './event/rejectedevent/RejectedEventsContext.jsx';
 import RejectedEventNotification from './event/rejectedevent/RejectedEvent.jsx';
 import ResetPassword from './auth/resetpassword/ResetPassword.jsx';
+import RegisteredUsers from './event/myevents/RegisteredIUsers.jsx';
+import GoogleSignupComplete from './auth/GoogleSignUpComplete.jsx';
 
+const UserChecker = ({ children }) => {
+  const navigate = useNavigate();
+  const [checking, setChecking] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        try {
+          const userDoc = await getDoc(doc(db, 'users', user.uid));
+          if (userDoc.exists()) {
+            const userData = userDoc.data();
+            if (!userData.username || !userData.age) {
+              navigate('/google-kayıt-tamamla');
+            }
+          }
+        } catch (error) {
+          console.error("Error checking user data:", error);
+        }
+      }
+      setChecking(false);
+    });
+
+    return () => unsubscribe();
+  }, [navigate]);
+
+  if (checking) {
+    return <div>Yükleniyor...</div>;
+  }
+
+  return children;
+};
 
 const RejectedEventCheck = () => {
   const { rejectedEvents } = useRejectedEvents();
@@ -142,6 +175,7 @@ const App = () => {
     return (
       <RejectedEventsProvider>
         <Router>
+        <UserChecker>
           <div className="App">
             <Header/>
             <MapScriptLoader>
@@ -179,11 +213,14 @@ const App = () => {
               <Route path="/etkinlik/:eventId" element={<EventDetail />} />
               <Route path="/email-doğrulama" element={<EmailVerification />}/>
               <Route path="/etkinlik-reddedildi/:eventId" element={<RejectedEventNotification />} />
+              <Route path={`/kayıtlı-kişiler/:eventId`} element={<RegisteredUsers/>}/>
               <Route path="/şifre-değiştirme" element={<ResetPassword />} />
+              <Route path="google-kayıt-tamamla" element={<GoogleSignupComplete/>}/>
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
             </MapScriptLoader>
           </div>
+        </UserChecker>
         </Router>
         </RejectedEventsProvider>
     );

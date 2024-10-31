@@ -13,6 +13,8 @@ const Signup = () => {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const [username, setUsername] = useState("");
+  const [age, setAge] = useState("");
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
@@ -45,6 +47,8 @@ const Signup = () => {
 
       await setDoc(doc(db, "users", user.uid), {
         email: user.email,
+        username: username,
+        age: parseInt(age),
         createdAt: new Date().getTime(),
         isAdmin: false,
         emailVerified: false
@@ -78,7 +82,6 @@ const Signup = () => {
           return;
         }
 
-        // Update countdown message
         const timeLeft = Math.max(0, (15 * 60 * 1000 - timeElapsed) / 1000);
         const minutes = Math.floor(timeLeft / 60);
         const seconds = Math.floor(timeLeft % 60);
@@ -104,21 +107,29 @@ const Signup = () => {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
       
-      await setDoc(doc(db, "users", user.uid), {
-        email: user.email,
-        createdAt: new Date().getTime(),
-        isAdmin: false,
-        emailVerified: true
-      });
+      const userDocRef = doc(db, "users", user.uid);
+      const userDocSnap = await getDoc(userDocRef);
       
-      navigate("/profil");
+      if (!userDocSnap.exists()) {
+        await setDoc(userDocRef, {
+          email: user.email,
+          createdAt: new Date().getTime(),
+          isAdmin: false,
+          emailVerified: true
+        });
+        navigate("/google-kayıt-tamamla");
+      } else if (!userDocSnap.data().username || !userDocSnap.data().age) {
+        navigate("/google-kayıt-tamamla");
+      } else {
+        setTimeout(() => navigate("/profil"), 1000);
+      }
     } catch (error) {
       setError(error.message);
     }
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div>Yükleniyor...</div>;
   }
 
   return (
@@ -138,6 +149,25 @@ const Signup = () => {
           placeholder="Email"
           required
         />
+
+        <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Username"
+            required
+            minLength="3"
+            maxLength="20"
+          />
+          <input
+            type="number"
+            value={age}
+            onChange={(e) => setAge(e.target.value)}
+            placeholder="Age"
+            required
+            min="13"
+            max="120"
+          />
         <input
           type="password"
           value={password}

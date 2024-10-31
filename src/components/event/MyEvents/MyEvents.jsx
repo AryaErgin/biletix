@@ -154,6 +154,7 @@ const MyEvents = () => {
                         </div>
                         <div className="event-actions">
                             <Link to={`/etkinlik/${event.id}`} className="btn btn-view">Görüntüle</Link>
+                            <Link to={`/kayıtlı-kişiler/${event.id}`} className="btn btn-view">Kayıtlı Kişileri Görüntüleyin</Link>
                             <button className="btn btn-edit" onClick={() => handleEdit(event)}>Edit</button>
                             <button className="btn btn-delete" onClick={() => handleDelete(event.id)}>Sil</button>
                         </div>

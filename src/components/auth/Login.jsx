@@ -42,7 +42,6 @@ const Login = () => {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
       
-      // Check if user document exists in Firestore
       const userDocRef = doc(db, "users", user.uid);
       const userDocSnap = await getDoc(userDocRef);
       
@@ -53,16 +52,19 @@ const Login = () => {
           isAdmin: false,
           emailVerified: true
         });
+        navigate("/google-kayıt-tamamla");
+      } else if (!userDocSnap.data().username || !userDocSnap.data().age) {
+        navigate("/google-kayıt-tamamla");
+      } else {
+        setTimeout(() => navigate("/"), 1000);
       }
-      
-      navigate("/");
     } catch (error) {
       setError(error.message);
     }
-  };
+};
 
   if (loading) {
-    return <div>Loading...</div>; 
+    return <div>Yükleniyor...</div>; 
   }
 
   return (
