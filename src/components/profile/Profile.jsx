@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { auth, db } from "../../firebase";
 import { useNavigate } from "react-router-dom";
-import { sendPasswordResetEmail, deleteUser, EmailAuthProvider, reauthenticateWithCredential } from "firebase/auth";
-import { doc, deleteDoc, updateDoc } from "firebase/firestore";
+import { sendPasswordResetEmail, deleteUser , EmailAuthProvider, reauthenticateWithCredential } from "firebase/auth";
+import { doc, deleteDoc, updateDoc, getDoc } from "firebase/firestore";
 import './Profile.css';
 
 const Profile = () => {
-  const [user, setUser] = useState(null);
+  const [user, setUser ] = useState(null);
+  const [userData, setUserData] = useState(null);
   const [resetSent, setResetSent] = useState(false);
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
@@ -18,10 +19,17 @@ const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
+    const timeoutId = setTimeout(async () => {
       const currentUser = auth.currentUser;
       if (currentUser) {
         setUser(currentUser);
+        // Fetch user data from Firestore
+        const userDoc = await getDoc(doc(db, "users", currentUser.uid));
+        if (userDoc.exists()) {
+          setUserData(userDoc.data());
+          setChangeUsername(userDoc.data().username || "");
+          setChangeAge(userDoc.data().age || "");
+        }
       } else {
         navigate("/giriş-yap");
       }
@@ -41,7 +49,7 @@ const Profile = () => {
 
   const handlePasswordReset = async () => {
     if (!user) {
-      setError("User not found. Please try logging in again.");
+      setError("User  not found. Please try logging in again.");
       return;
     }
 
@@ -68,7 +76,7 @@ const Profile = () => {
 
       await deleteDoc(doc(db, "users", user.uid));
 
-      await deleteUser(user);
+      await deleteUser (user);
 
       setSuccessMessage("Hesabınız başarıyla silindi.");
       navigate("/");
@@ -84,10 +92,12 @@ const Profile = () => {
   const updateProfile = async () => {
     try {
       const userRef = doc(db, "users", auth.currentUser.uid);
-      await updateDoc(userRef, {
+      const updates = {
         username: changeusername,
         age: parseInt(changeAge),
-      });
+      };
+      await updateDoc(userRef, updates);
+      setUserData(prev => ({ ...prev, ...updates }));
       setIsEditing(false);
       setSuccessMessage("Profile updated successfully!");
     } catch (error) {
@@ -106,43 +116,43 @@ const Profile = () => {
         </div>
 
         {isEditing ? (
-      <>
-        <div className="info-group">
-          <label>İsim</label>
-          <input
-            type="text"
-            value={user.username}
-            onChange={(e) => setChangeUsername(e.target.value)}
-            className="profile-input"
-          />
-        </div>
-        <div className="info-group">
-          <label>Yaş</label>
-          <input
-            type="number"
-            value={user.age}
-            onChange={(e) => setChangeAge(e.target.value)}
-            min="13"
-            max="120"
-            className="profile-input"
-          />
-        </div>
-        <button onClick={updateProfile} className="save-profile-btn">Değişiklikleri Kaydet</button>
-        <button onClick={() => setIsEditing(false)} className="cancel-edit-btn">İptal</button>
-      </>
-    ) : (
-      <>
-        <div className="info-group">
-          <label>İsim</label>
-          <p>{user.username}</p>
-        </div>
-        <div className="info-group">
-          <label>Yaş</label>
-          <p>{user.age}</p>
-        </div>
-        <button onClick={() => setIsEditing(true)} className="edit-profile-btn">Edit</button>
-      </>
-    )}
+          <>
+            <div className="info-group">
+              <label>İsim</label>
+ <input
+                type="text"
+                value={changeusername}
+                onChange={(e) => setChangeUsername(e.target.value)}
+                className="profile-input"
+              />
+            </div>
+            <div className="info-group">
+              <label>Yaş</label>
+              <input
+                type="number"
+                value={changeAge}
+                onChange={(e) => setChangeAge(e.target.value)}
+                min="13"
+                max="120"
+                className="profile-input"
+              />
+            </div>
+            <button onClick={updateProfile} className="save-profile-btn">Değişiklikleri Kaydet</button>
+            <button onClick={() => setIsEditing(false)} className="cancel-edit-btn">İptal</button>
+          </>
+        ) : (
+          <>
+            <div className="info-group">
+              <label>İsim</label>
+              <p>{userData?.username || "Not set"}</p>
+            </div>
+            <div className="info-group">
+              <label>Yaş</label>
+              <p>{userData?.age || "Not set"}</p>
+            </div>
+            <button onClick={() => setIsEditing(true)} className="edit-profile-btn">Edit</button>
+          </>
+        )}
 
         <div className="info-group">
           <label>Hesap Oluşturma Tarihi:</label>
