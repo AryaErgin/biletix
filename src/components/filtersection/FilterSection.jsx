@@ -77,7 +77,7 @@ const FilterSection = ({ onFilter }) => {
         <button 
           className="filter-button" 
           onClick={handleFilterChange}
-          data-text="Filter"
+          data-text="Filtrele"
         >
           Filtrele
         </button>
