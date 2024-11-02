@@ -4,7 +4,7 @@
 
 .filter-section {
   padding: 3.125rem 5%;
-  background: var(--color-background-gradient);
+  background: var(--color-background);
 }
 
 .title {
@@ -27,7 +27,7 @@
   align-items: stretch;
   gap: 1.25rem;
   padding: 1.875rem 1.25rem;
-  background: var(--color-surface);
+  background: var(--color-primary);
   border-radius: 1.25rem;
   box-shadow: 0 0.625rem 1.875rem var(--shadow-primary);
 }
@@ -61,7 +61,7 @@
 }
 
 .filter-button {
-  background: var(--color-primary-gradient);
+  background: var(--color-secondary);
   color: var(--color-text-primary);
   font-size: 1.2rem;
   font-weight: 600;
@@ -78,10 +78,11 @@
 }
 
 .filter-button:hover {
-  background: var(--color-background);
+  background: var(--color-background-alt);
   position: relative;
   z-index: 1;
   transform: translateY(-0.125rem);
+  border: 0.0625rem solid var(--color-secondary);
 }
 
 .filter-button:hover::after {
@@ -94,10 +95,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--color-primary-gradient);
+  background: var(--color-secondary);
   -webkit-background-clip: text;
   background-clip: text;
-  color: transparent;
   z-index: 2;
 }
 
@@ -126,7 +126,6 @@
   box-shadow: 0 0 0 0.1875rem var(--color-accent-light);
 }
 
-/* Style for the select dropdown arrow */
 .filters label select {
   appearance: none;
   background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");

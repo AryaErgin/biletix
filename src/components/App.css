@@ -6,17 +6,20 @@
 
   /* Light Theme (default) */
   .light-theme {
-    /* Primary Colors */
-    --color-primary: #ffd900;
-    --color-primary-light: #fed718;
-    --color-primary-dark: #ffcc00;
-    --color-primary-gradient: linear-gradient(45deg, #ffd900, #fed718);
-    --color-primary-gradient-alt: linear-gradient(90deg, #ffcc00, #ffd700);
+    /* Primary Colors (Blues) */
+    --color-primary: #005FA8;
+    --color-primary-alt: #2980b9;
+    --color-primary-gradient: linear-gradient(45deg, #3498db, #5dade2);
+    --color-primary-gradient-alt: linear-gradient(90deg, #2980b9, #3498db);
     
-    /* Accent Colors */
-    --color-accent: #c9a200;
-    --color-accent-light: rgba(201, 162, 0, 0.2);
-    --color-accent-transparent: rgba(201, 162, 0, 0.3);
+    /* Secondary Colors (Reds) */
+    --color-secondary: #f8f9fa ;
+    --color-secondary-gradient: linear-gradient(45deg, #e74c3c, #eb6b5e);
+    
+    /* Tertiary Colors (Whites) */
+    --color-tertiary: #ffffff;
+    --color-tertiary-light: #f8f9fa;
+    --color-tertiary-dark: #e9ecef;
     
     /* Background Colors */
     --color-background: #ffffff;
@@ -25,50 +28,51 @@
     --color-surface: #ffffff;
     
     /* Text Colors */
-    --color-text-primary: #000000;
-    --color-text-secondary: #333333;
-    --color-text-tertiary: #555555;
+    --color-text-primary: #333333;
+    --color-text-secondary: #555555;
+    --color-text-tertiary: #777777;
     
-    /* Status Colors */
+    /* Status Colors (Unchanged) */
     --color-success: #2ed573;
     --color-error: #ff4757;
     --color-success-light: rgba(46, 213, 115, 0.15);
     --color-error-light: rgba(255, 71, 87, 0.15);
     
     /* Border Colors */
-    --color-border: #ddd;
+    --color-border: #dee2e6;
     
     /* Shadow Colors */
     --shadow-primary: rgba(0, 0, 0, 0.1);
-    --shadow-secondary: rgba(255, 204, 0, 0.2);
+    --shadow-secondary: rgba(52, 152, 219, 0.2);
 
     /* Header Colours */
-    --header-gradient: linear-gradient(45deg, #ffd900, #fed718);
+    --header-gradient: linear-gradient(45deg, #3498db, #5dade2);
 
     /* Profile Colours */
-  --color-signout: #ff6b6b;
-  --color-signout-hover: #ff8787;
-  --color-delete-account: #c0392b;
-  --color-delete-account-hover: #e74c3c;
-  --color-edit-profile: #3498db;
-  --color-edit-profile-hover: #2980b9;
-  --color-cancel: #7f8c8d;
-  --color-cancel-hover: #95a5a6;
+    --color-signout: #e74c3c;
+    --color-signout-hover: #eb6b5e;
+    --color-delete-account: #c0392b;
+    --color-delete-account-hover: #e74c3c;
+    --color-edit-profile: #3498db;
+    --color-edit-profile-hover: #2980b9;
+    --color-cancel: #7f8c8d;
+    --color-cancel-hover: #95a5a6;
   }
 
   /* Dark Theme */
   .dark-theme {
-    /* Primary Colors */
-    --color-primary: #ffd900;
-    --color-primary-light: #806c00;
-    --color-primary-dark: #665600;
-    --color-primary-gradient: linear-gradient(45deg, #806c00, #ffd900);
-    --color-primary-gradient-alt: linear-gradient(90deg, #665600, #806c00);
+    /* Primary Colors (Darker Blues) */
+    --color-primary: #003862;
+    --color-primary-alt: #1f618d;
+    --color-primary-gradient: linear-gradient(45deg, #1f618d, #2980b9);
+    --color-primary-gradient-alt: linear-gradient(90deg, #1f618d, #2980b9);
     
-    /* Accent Colors */
-    --color-accent: #ffd900;
-    --color-accent-light: rgba(255, 217, 0, 0.2);
-    --color-accent-transparent: rgba(255, 217, 0, 0.3);
+    /* Secondary Colors (Darker Reds) */
+    --color-secondary: #333333;
+    --color-secondary-gradient: linear-gradient(45deg, #c0392b, #e74c3c);
+    
+    /* Tertiary Colors (Blacks) */
+    --color-tertiary: #121212;
     
     /* Background Colors */
     --color-background: #121212;
@@ -81,7 +85,7 @@
     --color-text-secondary: #e0e0e0;
     --color-text-tertiary: #b0b0b0;
     
-    /* Status Colors */
+    /* Status Colors (Unchanged) */
     --color-success: #2ed573;
     --color-error: #ff4757;
     --color-success-light: rgba(46, 213, 115, 0.15);
@@ -92,20 +96,20 @@
     
     /* Shadow Colors */
     --shadow-primary: rgba(0, 0, 0, 0.3);
-    --shadow-secondary: rgba(255, 204, 0, 0.1);
+    --shadow-secondary: rgba(41, 128, 185, 0.1);
 
     /* Header Colours */
-    --header-gradient: linear-gradient(to right, #333333, #555555);
+    --header-gradient: linear-gradient(to right, #1f618d, #2980b9);
 
-     /* Profile Colours */
-  --color-signout: #ff6b6b;
-  --color-signout-hover: #ff8787;
-  --color-delete-account: #c0392b;
-  --color-delete-account-hover: #e74c3c;
-  --color-edit-profile: #3498db;
-  --color-edit-profile-hover: #2980b9;
-  --color-cancel: #7f8c8d;
-  --color-cancel-hover: #95a5a6;
+    /* Profile Colours */
+    --color-signout: #c0392b;
+    --color-signout-hover: #e74c3c;
+    --color-delete-account: #962d22;
+    --color-delete-account-hover: #c0392b;
+    --color-edit-profile: #2980b9;
+    --color-edit-profile-hover: #3498db;
+    --color-cancel: #5f6a6a;
+    --color-cancel-hover: #7f8c8d;
   }
 }
 
@@ -129,10 +133,10 @@
 
 .title h1 {
   font-size: 2.5rem;
-  color: #333;
+  color: var(--color-text-secondary);
   margin: 0;
   font-weight: 700;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+  text-shadow: var(--shadow-primary);
 }
 
 

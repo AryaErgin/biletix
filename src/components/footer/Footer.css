@@ -1,5 +1,5 @@
 .footer {
-  background: var(--header-gradient);
+  background: var(--color-primary);
   color: var(--color-text-primary);
   padding: 3.125rem 1.875rem 1.875rem 1.875rem;
   margin-top: 6.25rem;
@@ -33,7 +33,7 @@
   margin-bottom: 1.25rem;
   font-size: 1.25rem;
   font-weight: 600;
-  background: var(--color-primary-gradient);
+  background: var(--color-primary);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -83,16 +83,16 @@
   padding: 0.75rem 1.25rem;
   border-radius: 0.5rem;
   cursor: pointer;
-  color: var(--color-text-primary);
+  color: var(--color-background);
   font-weight: 600;
   border: none;
-  background: var(--color-primary-gradient);
+  background: var(--color-primary);
   transition: var(--theme-transition);
   box-sizing: border-box;
 }
 
 .footer-column button:hover {
-  background: var(--color-primary-gradient-alt);
+  background: var(--color-primary);
   transform: translateY(-0.125rem);
   box-shadow: 0 0.25rem 0.5rem var(--shadow-secondary);
 }

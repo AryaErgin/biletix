@@ -1,5 +1,5 @@
 .main-header {
-  background: var(--header-gradient);
+  background: var(--color-primary);
   background-blend-mode: soft-light;
   padding: 1.5rem 2rem;
   box-shadow: 0 0.125rem 0.625rem var(--shadow-primary);
@@ -35,10 +35,10 @@ nav {
 }
 
 nav a {
-  background-color: var(--color-text-primary);
+  background-color: var(--color-secondary);
   padding: 0.5rem 1rem;
   border-radius: 1.25rem;
-  color: var(--color-background);
+  color: var(--color-text-primary);
   text-decoration: none;
   font-size: 0.9rem;
   font-weight: 500;

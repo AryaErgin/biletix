@@ -138,7 +138,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--color-primary-gradient);
+    background: var(--color-background);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;

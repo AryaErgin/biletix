@@ -6,7 +6,7 @@
 .search {
   max-width: 62.5rem;
   margin: 0 auto;
-  background-color: var(--color-surface);
+  background: var(--color-primary);
   border-radius: 1.25rem;
   padding: 2.5rem;
   box-shadow: 0 0.625rem 1.875rem var(--shadow-primary);
@@ -16,7 +16,7 @@
 .search h1 {
   font-size: 2.8rem;
   margin-bottom: 1.875rem;
-  color: var(--color-text-secondary);
+  color: #fff;
   text-align: center;
   font-weight: 700;
   text-shadow: 0.125rem 0.125rem 0.25rem var(--shadow-primary);
@@ -36,8 +36,10 @@
   font-size: 1.2rem;
   padding: 0.9375rem 1.5625rem;
   border-radius: 3.125rem;
+  background-color: var(--color-background);
   border: 0.125rem solid var(--color-border);
   transition: var(--theme-transition);
+  color: var(--color-text-primary);
   box-shadow: inset 0 0.125rem 0.3125rem var(--shadow-primary);
 }
 
@@ -49,7 +51,7 @@
 }
 
 .search-bar button {
-  background: var(--color-primary-gradient);
+  background: var(--color-secondary);
   color: var(--color-text-primary);
   font-size: 1.2rem;
   font-weight: 600;
@@ -66,9 +68,9 @@
 }
 
 .search-bar button:hover {
-  background: var(--color-background);
+  background: var(--color-background-alt);
   transform: translateY(-0.125rem);
-  color: transparent;
+  border: 0.0625rem solid var(--color-secondary);
 }
 
 .search-bar button:hover::after {
@@ -81,10 +83,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--color-primary-gradient);
+  background: var(--color-secondary);
   -webkit-background-clip: text;
   background-clip: text;
-  color: transparent;
 }
 
 .search-bar button:active {
@@ -222,13 +223,13 @@
 
 @media (hover: none) {
   .search-bar button {
-    background: #000;
-    color: #ffd900;
+    background: var(--color-text-primary);;
+    color: var(--color-secondary);
   }
 
   .search-bar button:active {
-    background: linear-gradient(45deg, #ffd900, #fed718);
-    color: #000;
+    background: var(--color-secondary);
+    color: var(--color-text-primary);
   }
 }
 

@@ -90,8 +90,8 @@
 }
 
 .submit {
-  background: var(--color-primary-gradient);
-  color: var(--color-text-primary);
+  background: var(--color-primary);
+  color: var(--color-background);
   width: calc(100% - 1.875rem);
   height: 4.375rem;
   margin: 1.25rem auto;
@@ -109,8 +109,8 @@
 }
 
 .submit:hover {
-  background: var(--color-background);
-  color: var(--color-primary);
+  background: var(--color-primary);
+  color: var(--color-background);
   box-shadow: 0 0.25rem 1rem var(--shadow-secondary);
 }
 
@@ -187,7 +187,6 @@
   background: var(--color-success-light);
 }
 
-/* Location section */
 .location-section {
   width: 100%;
   margin: 1.25rem 0;
