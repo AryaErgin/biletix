@@ -5,7 +5,7 @@
   width: 100%;
   padding: 2rem 0;
   margin-bottom: 3.125rem;
-  background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+  background: var(--color-background-gradient);
 }
 
 .map {
@@ -14,13 +14,13 @@
   height: 25rem; 
   border: none;
   border-radius: 1.25rem;
-  box-shadow: 0 0.625rem 1.875rem rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+  box-shadow: 0 0.625rem 1.875rem var(--shadow-primary);
+  transition: var(--theme-transition);
   margin: 0 auto;
 }
 
 .map:hover {
-  box-shadow: 0 0.9375rem 2.5rem rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0.9375rem 2.5rem var(--shadow-hover);
   transform: translateY(-0.125rem);
 }
 

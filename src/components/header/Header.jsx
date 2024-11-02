@@ -6,12 +6,15 @@ import { auth, db } from "../../firebase"
 import './Header.css';
 import logo from "../../photos/logo.png";
 import logo1 from  "../../photos/logo1.png";
+import { useTheme } from '../../context/ThemeContext';
+import { FaSun, FaMoon } from 'react-icons/fa';
 
 const Header = () => {
   const [user, setUser] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isDarkMode, toggleTheme } = useTheme();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -71,14 +74,36 @@ const Header = () => {
               <Link to="/benim-etkinliklerim" onClick={toggleMenu}>Benim Etkinliklerim</Link>
               {isAdmin && !loading && <Link to="/etkinlik-onayla" onClick={toggleMenu}>Etkinlik Onayla</Link>}
               <Link to="/profil" onClick={toggleMenu}>Profil</Link>
+              <button 
+                onClick={toggleTheme}
+                className="theme-toggle mobile"
+              >
+                {isDarkMode ? <FaSun /> : <FaMoon />}
+                <span>Tema Değiştir</span>
+              </button>
             </>
           ) : (
             <>
               <Link to="/giriş-yap" onClick={toggleMenu}>Giriş Yap</Link>
               <Link to="/hesap-oluştur" onClick={toggleMenu}>Hesap Oluştur</Link>
+
+              <button 
+                onClick={toggleTheme}
+                className="theme-toggle mobile"
+              >
+                {isDarkMode ? <FaSun /> : <FaMoon />}
+                <span>Tema Değiştir</span>
+              </button>
             </>
           )}
         </nav>
+
+          <button 
+            onClick={toggleTheme}
+            className="theme-toggle desktop"
+          >
+            {isDarkMode ? <FaSun /> : <FaMoon />}
+          </button>
       </div>
     </header>
   );

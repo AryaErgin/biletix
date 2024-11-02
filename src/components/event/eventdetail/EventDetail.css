@@ -2,13 +2,13 @@
     max-width: 75rem;
     margin: 3.75rem auto;
     padding: 2.5rem;
-    background-color: #fff;
+    background-color: var(--color-surface);
     border-radius: 1.25rem;
-    box-shadow: 0 0.625rem 1.875rem rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0.625rem 1.875rem var(--shadow-primary);
 }
 
 .event-detail h2 {
-    color: #333;
+    color: var(--color-text-primary);
     font-size: 3rem;
     margin-bottom: 3rem;
     text-align: center;
@@ -33,7 +33,7 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    box-shadow: 0 0.625rem 1.25rem rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0.625rem 1.25rem var(--shadow-primary);
 }
 
 .media-items {
@@ -44,7 +44,7 @@
 }
 
 .nav-button {
-    background: linear-gradient(90deg, rgba(255, 204, 0, 0.8), rgba(255, 165, 0, 0.8)); 
+    background: var(--color-primary-gradient);
     border: none;
     border-radius: 50%;
     width: 3.75rem;
@@ -54,16 +54,16 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    transition: background 0.3s, transform 0.3s;
+    transition: var(--theme-transition);
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #fff; 
-    box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.2); 
+    color: var(--color-text-primary);
+    box-shadow: 0 0.25rem 0.625rem var(--shadow-primary);
 }
 
 .nav-button:hover {
-    background: linear-gradient(90deg, rgba(255, 204, 0, 1), rgba(255, 165, 0, 1)); 
+    background: var(--color-primary-gradient-alt);
     transform: translateY(-50%) scale(1.1);
 }
 
@@ -79,11 +79,11 @@
     font-size: 1.125rem;
     line-height: 1.6;
     margin-bottom: 1.25rem;
-    color: #555;
+    color: var(--color-text-tertiary);
 }
 
 .event-detail strong {
-    color: #333;
+    color: var(--color-text-secondary);
     font-weight: 600;
 }
 
@@ -96,9 +96,9 @@
 .maps {
     width: 100%;
     height: 25rem;
-    border: 0.3125rem solid #ffcc00;
+    border: 0.3125rem solid var(--color-primary);
     border-radius: 0.9375rem;
-    box-shadow: 0 0.3125rem 0.9375rem rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0.3125rem 0.9375rem var(--shadow-primary);
 }
 
 .registration-button {
@@ -112,19 +112,19 @@
     text-decoration: none;
     border: none;
     border-radius: 3.125rem;
-    transition: all 0.3s ease;
+    transition: var(--theme-transition);
     cursor: pointer;
-    background: linear-gradient(45deg, #ffd900, #fed718);
-    color: black;
+    background: var(--color-primary-gradient);
+    color: var(--color-text-primary);
     text-transform: uppercase;
     letter-spacing: 0.0625rem;
-    box-shadow: 0 0.25rem 1rem rgba(255, 215, 0, 0.3);
+    box-shadow: 0 0.25rem 1rem var(--shadow-secondary);
 }
 
 .registration-button:hover {
     transform: translateY(-0.1875rem);
-    box-shadow: 0 0.5rem 1.5rem rgba(255, 215, 0, 0.4);
-    background: black;
+    box-shadow: 0 0.5rem 1.5rem var(--shadow-secondary);
+    background: var(--color-background);
     color: transparent;
 }
 
@@ -138,7 +138,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(45deg, #ffd700, #ffec8b);
+    background: var(--color-primary-gradient);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -149,12 +149,12 @@
 }
 
 .registration-button.registered {
-    background: linear-gradient(135deg, #41ff47, #45a049);
+    background: var(--color-success);
 }
 
 .registration-button.registered:hover {
-    background: linear-gradient(135deg, #b91c1c, #ee0000);
-    color: black;
+    background: var(--color-error);
+    color: var(--color-text-primary);
 }
 
 .modal-overlay {
@@ -172,10 +172,10 @@
 }
 
 .modal-content {
-    background: linear-gradient(145deg, #ffffff, #f3f3f3);
+    background: var(--color-background-gradient);
     padding: 2.5rem;
     border-radius: 1.25rem;
-    box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0.5rem 2rem var(--shadow-primary);
     max-width: 90%;
     width: 35rem;
     text-align: center;
@@ -195,7 +195,7 @@
 }
 
 .modal-content h3 {
-    color: #333;
+    color: var(--color-text-primary);
     font-size: 2rem;
     margin-bottom: 1.5rem;
     font-weight: 700;
@@ -204,7 +204,7 @@
 }
 
 .modal-content p {
-    color: #666;
+    color: var(--color-text-secondary);
     margin-bottom: 2rem;
     font-size: 1.2rem;
     line-height: 1.6;
@@ -217,7 +217,6 @@
     padding: 0 1rem;
 }
 
-/* Common Button Styles */
 .modal-buttons button {
     padding: 1rem 2.5rem;
     font-size: 1.2rem;
@@ -225,65 +224,57 @@
     border: none;
     border-radius: 3rem;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: var(--theme-transition);
     text-transform: uppercase;
     letter-spacing: 0.0625rem;
     min-width: 10rem;
     flex: 1;
 }
 
-/* Sign In Button Styles */
-.modal-buttons .sign-in-btn {
-    background: linear-gradient(45deg, #ffd900, #fed718);
-    color: black;
-    box-shadow: 0 0.25rem 1rem rgba(255, 217, 0, 0.3);
+.sign-in-btn {
+    background: var(--color-primary-gradient);
+    color: var(--color-text-primary);
+    box-shadow: 0 0.25rem 1rem var(--shadow-secondary);
 }
 
-.modal-buttons .sign-in-btn:hover {
+.sign-in-btn:hover {
+    background: var(--color-primary-gradient-alt);
     transform: translateY(-0.1875rem);
-    box-shadow: 0 0.5rem 1.5rem rgba(255, 217, 0, 0.4);
-    background: black;
-    color: #ffd900;
 }
 
-/* Cancel Registration Button Styles */
-.modal-buttons .confirm-cancel-btn {
-    background: linear-gradient(135deg, #ff4747, #dc2626);
-    color: white;
-    box-shadow: 0 0.25rem 1rem rgba(220, 38, 38, 0.3);
+.confirm-cancel-btn {
+    background: var(--color-error);
+    color: var(--color-text-primary);
 }
 
-.modal-buttons .confirm-cancel-btn:hover {
+.confirm-cancel-btn:hover {
+    background: var(--color-error-light);
     transform: translateY(-0.1875rem);
-    box-shadow: 0 0.5rem 1.5rem rgba(220, 38, 38, 0.4);
-    background: linear-gradient(135deg, #dc2626, #991b1b);
 }
 
-/* Keep Registration Button Styles */
-.modal-buttons .keep-registration-btn {
-    background: linear-gradient(45deg, #10b981, #059669);
-    color: white;
-    box-shadow: 0 0.25rem 1rem rgba(16, 185, 129, 0.3);
+.keep-registration-btn {
+    background: var(--color-success);
+    color: var(--color-text-primary);
 }
 
-.modal-buttons .keep-registration-btn:hover {
+.keep-registration -btn:hover {
+    background: var(--color-success-light);
     transform: translateY(-0.1875rem);
-    box-shadow: 0 0.5rem 1.5rem rgba(16, 185, 129, 0.4);
-    background: linear-gradient(45deg, #059669, #047857);
 }
 
-/* Generic Cancel Button Style */
-.modal-buttons .cancel-btn {
-    background: linear-gradient(145deg, #f0f0f0, #e0e0e0);
-    color: #666;
-    box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.1);
+.close-modal-btn {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--color-text-secondary);
+    transition: var(--theme-transition);
 }
 
-.modal-buttons .cancel-btn:hover {
-    transform: translateY(-0.1875rem);
-    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.15);
-    background: linear-gradient(145deg, #e0e0e0, #d0d0d0);
-    color: #333;
+.close-modal-btn:hover {
+    color: var(--color-text-primary);
+    transform: scale(1.1);
 }
 
 @media (max-width: 48rem) { 

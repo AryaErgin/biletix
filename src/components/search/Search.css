@@ -1,25 +1,25 @@
 .search-container {
   padding: 3.125rem 5%;
-  background: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 100%);
+  background: var(--color-background-gradient);
 }
 
 .search {
   max-width: 62.5rem;
   margin: 0 auto;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: var(--color-surface);
   border-radius: 1.25rem;
   padding: 2.5rem;
-  box-shadow: 0 0.625rem 1.875rem rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.625rem 1.875rem var(--shadow-primary);
   backdrop-filter: blur(0.625rem);
 }
 
 .search h1 {
   font-size: 2.8rem;
   margin-bottom: 1.875rem;
-  color: #333;
+  color: var(--color-text-secondary);
   text-align: center;
   font-weight: 700;
-  text-shadow: 0.125rem 0.125rem 0.25rem rgba(0,0,0,0.1);
+  text-shadow: 0.125rem 0.125rem 0.25rem var(--shadow-primary);
 }
 
 .search-bar {
@@ -36,29 +36,29 @@
   font-size: 1.2rem;
   padding: 0.9375rem 1.5625rem;
   border-radius: 3.125rem;
-  border: 0.125rem solid #ddd;
-  transition: all 0.3s ease;
-  box-shadow: inset 0 0.125rem 0.3125rem rgba(0,0,0,0.05);
+  border: 0.125rem solid var(--color-border);
+  transition: var(--theme-transition);
+  box-shadow: inset 0 0.125rem 0.3125rem var(--shadow-primary);
 }
 
 .search-bar input[type="text"]:focus {
   outline: none;
-  border-color: #c9a200;
-  box-shadow: 0 0 0 0.1875rem rgba(201, 162, 0, 0.2), 
-              inset 0 0.125rem 0.3125rem rgba(0,0,0,0.05);
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 0.1875rem var(--color-accent-light), 
+              inset 0 0.125rem 0.3125rem var(--shadow-primary);
 }
 
 .search-bar button {
-  background: linear-gradient(45deg, #ffd900, #fed718);
-  color: #000;
+  background: var(--color-primary-gradient);
+  color: var(--color-text-primary);
   font-size: 1.2rem;
   font-weight: 600;
   padding: 0.9375rem 1.875rem;
   border: none;
   border-radius: 3.125rem;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 0.25rem 0.9375rem rgba(201, 162, 0, 0.3);
+  transition: var(--theme-transition);
+  box-shadow: 0 0.25rem 0.9375rem var(--color-accent-transparent);
   text-transform: uppercase;
   letter-spacing: 0.0625rem;
   position: relative;
@@ -66,7 +66,7 @@
 }
 
 .search-bar button:hover {
-  background: #000;
+  background: var(--color-background);
   transform: translateY(-0.125rem);
   color: transparent;
 }
@@ -81,7 +81,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(45deg, #ffd700, #ffec8b);
+  background: var(--color-primary-gradient);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -89,7 +89,7 @@
 
 .search-bar button:active {
   transform: translateY(0.0625rem);
-  box-shadow: 0 0.125rem 0.625rem rgba(201, 162, 0, 0.4);
+  box-shadow: 0 0.125rem 0.625rem var(--color-accent-transparent);
 }
 
 @media (min-width: 90rem) {

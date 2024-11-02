@@ -2,15 +2,15 @@
   max-width: 50rem;
   margin: 2.5rem auto;
   padding: 2.5rem;
-  background-color: #ffffff;
+  background-color: var(--color-surface);
   border-radius: 0.9375rem;
-  box-shadow: 0 0.25rem 1.25rem rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.25rem 1.25rem var(--shadow-primary);
 }
 
 .create-event h2 {
   text-align: center;
   margin-bottom: 1.875rem;
-  color: #000;
+  color: var(--color-text-primary);
   font-size: 3rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -27,53 +27,56 @@
 .create-event form input[type="file"] {
   width: calc(100% - 1.875rem);
   padding: 0.9375rem;
-  border: 0.125rem solid #ffd900;
+  border: 0.125rem solid var(--color-primary);
   border-radius: 0.625rem;
   font-size: 1.5rem;
-  background-color: white;
-  transition: all 0.3s ease;
-  box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.1);
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  transition: var(--theme-transition);
+  box-shadow: 0 0.125rem 0.3125rem var(--shadow-primary);
 }
 
 .create-event form input[type="text"]:focus {
   outline: none;
-  border-color: #fed718;
-  box-shadow: 0 0 0.625rem rgba(255, 217, 0, 0.3);
+  border-color: var(--color-primary-light);
+  box-shadow: 0 0 0.625rem var(--color-accent-transparent);
 }
 
 .create-event form textarea {
   width: calc(100% - 1.875rem);
   padding: 0.9375rem;
-  border: 0.0625rem solid #fed718;
+  border: 0.0625rem solid var(--color-primary);
   border-radius: 0.25rem;
   font-size: 1.6875rem;
-  background-color: white;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 0.625rem rgba(255, 217, 0, 0.3);
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  transition: var(--theme-transition);
+  box-shadow: 0 0 0.625rem var(--color-accent-transparent);
 }
 
 .create-event form input[type="date"]{
   width: calc(100% - 1.875rem);
   padding: 0.9375rem;
-  border: 0.0625rem solid #fed718;
+  border: 0.0625rem solid var(--color-primary);
   border-radius: 0.25rem;
   font-size: 1.6875rem;
-  background-color: white;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 0.625rem rgba(255, 217, 0, 0.3);
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  transition: var(--theme-transition);
+  box-shadow: 0 0 0.625rem var(--color-accent-transparent);
 }
 
 .create-event form input[type="file"] {
-  background: linear-gradient(45deg, #ffd900, #fed718);
-  color: #000;
+  background: var(--color-primary-gradient);
+  color: var(--color-text-primary);
   cursor: pointer;
   font-size: 1.125rem;
   border: none;
 }
 
 .create-event form input[type="file"]::-webkit-file-upload-button {
-  background: #000;
-  color: #fff;
+  background: var(--color-background);
+  color: var(--color-text-primary);
   padding: 0.625rem 1.25rem;
   border: none;
   border-radius: 0.3125rem;
@@ -87,8 +90,8 @@
 }
 
 .submit {
-  background: linear-gradient(45deg, #ffd900, #fed718);
-  color: #000;
+  background: var(--color-primary-gradient);
+  color: var(--color-text-primary);
   width: calc(100% - 1.875rem);
   height: 4.375rem;
   margin: 1.25rem auto;
@@ -99,15 +102,16 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.0625rem;
-  transition: all 0.3s ease;
+  transition: var(--theme-transition);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .submit:hover {
-  background: #000;
-  color: #ffd900;
+  background: var(--color-background);
+  color: var(--color-primary);
+  box-shadow: 0 0.25rem 1rem var(--shadow-secondary);
 }
 
 .media-preview {
@@ -121,8 +125,9 @@
   display: flex;
   align-items: center;
   padding: 0.625rem;
-  border: 0.0625rem solid #ddd;
+  border: 0.0625rem solid var(--color-border);
   border-radius: 0.25rem;
+  background-color: var(--color-background);
 }
 
 .preview-image,
@@ -135,6 +140,7 @@
 
 .media-item-details {
   flex-grow: 1;
+  color: var(--color-text-secondary);
 }
 
 .media-item-details span {
@@ -150,35 +156,35 @@
   font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: var(--theme-transition);
   margin-right: 0.625rem;
 }
 
 .remove-button {
-  background-color: #ff4d4d;
-  color: white;
+  background-color: var(--color-error);
+  color: var(--color-text-primary);
 }
 
 .remove-button:hover {
-  background-color: #ff3333;
+  background-color: var(--color-error-light);
 }
 
 .thumbnail-button {
-  background-color: #ffd900;
-  color: #000;
+  background: var(--color-primary-gradient);
+  color: var(--color-text-primary);
 }
 
 .thumbnail-button:hover {
-  background-color: #ffcc00;
+  background: var(--color-primary-gradient-alt);
 }
 
 .selected-thumbnail .thumbnail-button {
-  background-color: #4CAF50;
-  color: white;
+  background: var(--color-success);
+  color: var(--color-text-primary);
 }
 
 .selected-thumbnail .thumbnail-button:hover {
-  background-color: #45a049;
+  background: var(--color-success-light);
 }
 
 /* Location section */
@@ -193,35 +199,28 @@
   margin-top: 1.25rem;
   border-radius: 0.625rem;
   overflow: hidden;
+  border: 0.125rem solid var(--color-border);
 }
 
 .create-event form input[type="number"],
 .create-event form select {
   width: calc(100% - 1.875rem);
   padding: 0.9375rem;
-  border: 0.125rem solid #ffd900;
+  border: 0.125rem solid var(--color-primary);
   border-radius: 0.625rem;
   font-size: 1.5rem;
-  background-color: white;
-  transition: all 0.3s ease;
-  box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.1);
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  transition: var(--theme-transition);
+  box-shadow: 0 0.125rem 0.3125rem var(--shadow-primary);
   margin-bottom: 1.25rem;
 }
 
 .create-event form input[type="number"]:focus,
 .create-event form select:focus {
   outline: none;
-  border-color: #fed718;
-  box-shadow: 0 0 0.625rem rgba(255, 217, 0, 0.3);
-}
-
-.create-event form select {
-  appearance: none;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-  background-repeat: no-repeat;
-  background-position: right 1rem center;
-  background-size: 1em;
-  padding-right: 2.5rem;
+  border-color: var(--color-primary-light);
+  box-shadow: 0 0 0.625rem var(--color-accent-transparent);
 }
 
 .message-container {
@@ -230,43 +229,21 @@
   border-radius: 0.625rem;
   text-align: center;
   font-weight: 500;
-  animation: slideIn 0.3s ease-out;
+   color: var(--color-text-secondary);
+  background-color: var(--color-background);
+  border: 0.125rem solid var(--color-border);
 }
 
-@keyframes slideIn {
-  from {
-    transform: translateY(-1.25rem);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+.message-container.success {
+  background-color: var(--color-success);
+  color: var(--color-text-primary);
+  border-color: var(--color-success);
 }
 
-.error {
-  background-color: rgba(255, 71, 87, 0.1);
-  color: #ff4757;
-  border: 0.0625rem solid rgba(255, 71, 87, 0.3);
-}
-
-.success {
-  background-color: rgba(46, 213, 115, 0.1);
-  color: #2ed573;
-  border: 0.0625rem solid rgba(46, 213, 115, 0.3);
-}
-
-.error p, .success p {
-  margin: 0;
-  font-size: 1rem;
-  line-height: 1.5;
-}
-
-.create-event form label {
-  display: block;
-  margin-bottom: 0.625rem;
-  font-size: 1.125rem;
-  color: #333;
+.message-container.error {
+  background-color: var(--color-error);
+  color: var(--color-text-primary);
+  border-color: var(--color-error);
 }
 
 @media (min-width: 90rem) {

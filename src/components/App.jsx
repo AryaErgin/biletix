@@ -25,6 +25,7 @@ import RejectedEventNotification from './event/rejectedevent/RejectedEvent.jsx';
 import ResetPassword from './auth/resetpassword/ResetPassword.jsx';
 import RegisteredUsers from './event/myevents/RegisteredIUsers.jsx';
 import GoogleSignupComplete from './auth/GoogleSignUpComplete.jsx';
+import { ThemeProvider } from '../context/ThemeContext.jsx';
 
 const UserChecker = ({ children }) => {
   const navigate = useNavigate();
@@ -174,6 +175,7 @@ const App = () => {
 
     return (
       <RejectedEventsProvider>
+        <ThemeProvider>
         <Router>
         <UserChecker>
           <div className="App">
@@ -199,7 +201,7 @@ const App = () => {
                       <p>No events match your search criteria.</p>
                     </div>
                     )}
-                    <Footer />
+                    
                   </>
                 } 
                 />
@@ -218,10 +220,12 @@ const App = () => {
               <Route path="google-kayıt-tamamla" element={<GoogleSignupComplete/>}/>
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
+            <Footer />
             </MapScriptLoader>
           </div>
         </UserChecker>
         </Router>
+        </ThemeProvider>
         </RejectedEventsProvider>
     );
   };

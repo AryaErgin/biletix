@@ -4,7 +4,7 @@
 
 .filter-section {
   padding: 3.125rem 5%;
-  background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+  background: var(--color-background-gradient);
 }
 
 .title {
@@ -14,10 +14,10 @@
 
 .title h1 {
   font-size: 2.5rem;
-  color: #333;
+  color: var(--color-text-primary) !important;
   margin: 0;
   font-weight: 700;
-  text-shadow: 0.125rem 0.125rem 0.25rem rgba(0,0,0,0.1);
+  text-shadow: 0.125rem 0.125rem 0.25rem var(--shadow-primary);
 }
 
 .filters {
@@ -27,9 +27,9 @@
   align-items: stretch;
   gap: 1.25rem;
   padding: 1.875rem 1.25rem;
-  background: rgba(255, 255, 255, 0.9);
+  background: var(--color-surface);
   border-radius: 1.25rem;
-  box-shadow: 0 0.625rem 1.875rem rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.625rem 1.875rem var(--shadow-primary);
 }
 
 .filter-location,
@@ -40,35 +40,37 @@
 }
 
 .locinp,
-.dateinp {
+.dateinp,
+.orginp {
   width: 100%;
   padding: 1.25rem 0.625rem;
   font-size: 0.9rem;
-  border: 0.125rem solid #ddd;
+  border: 0.125rem solid var(--color-border);
   border-radius: 3.125rem;
-  background-color: white;
-  transition: all 0.3s ease;
-  color: #333;
+  background-color: var(--color-surface);
+  transition: var(--theme-transition);
+  color: var(--color-text-secondary);
 }
 
 .locinp:focus,
-.dateinp:focus {
+.dateinp:focus,
+.orginp:focus {
   outline: none;
-  border-color: #c9a200;
-  box-shadow: 0 0 0 0.1875rem rgba(201, 162, 0, 0.2);
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 0.1875rem var(--color-accent-light);
 }
 
 .filter-button {
-  background: linear-gradient(45deg, #ffd900, #fed718);
-  color: #000;
+  background: var(--color-primary-gradient);
+  color: var(--color-text-primary);
   font-size: 1.2rem;
   font-weight: 600;
   padding: 0.9375rem 1.875rem;
   border: none;
   border-radius: 3.125rem;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 0.25rem 0.9375rem rgba(201, 162, 0, 0.3);
+  transition: var(--theme-transition);
+  box-shadow: 0 0.25rem 0.9375rem var(--color-accent-transparent);
   text-transform: uppercase;
   letter-spacing: 0.0625rem;
   margin: 0 auto;
@@ -76,7 +78,7 @@
 }
 
 .filter-button:hover {
-  background: #000;
+  background: var(--color-background);
   position: relative;
   z-index: 1;
   transform: translateY(-0.125rem);
@@ -92,7 +94,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(45deg, #ffd700, #ffec8b);
+  background: var(--color-primary-gradient);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -101,7 +103,7 @@
 
 .filter-button:active {
   transform: translateY(0.0625rem);
-  box-shadow: 0 0.125rem 0.625rem rgba(201, 162, 0, 0.4);
+  box-shadow: 0 0.125rem 0.625rem var(--color-accent-transparent);
 }
 
 .filters label input[type="number"],
@@ -109,19 +111,19 @@
   width: 100%;
   padding: 1.25rem 0.625rem;
   font-size: 0.9rem;
-  border: 0.125rem solid #ddd;
+  border: 0.125rem solid var(--color-border);
   border-radius: 3.125rem;
-  background-color: white;
-  transition: all 0.3s ease;
-  color: #333;
+  background-color: var(--color-surface);
+  transition: var(--theme-transition);
+  color: var(--color-text-secondary);
   margin-top: 2rem;
 }
 
 .filters label input[type="number"]:focus,
 .filters label select:focus {
   outline: none;
-  border-color: #c9a200;
-  box-shadow: 0 0 0 0.1875rem rgba(201, 162, 0, 0.2);
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 0.1875rem var(--color-accent-light);
 }
 
 /* Style for the select dropdown arrow */
@@ -138,23 +140,6 @@
   margin-top: 2rem;
   flex: 1;
   min-width: 0;
-}
-
-.orginp {
-  width: 100%;
-  padding: 1.25rem 0.625rem;
-  font-size: 0.9rem;
-  border: 0.125rem solid #ddd;
-  border-radius: 3.125rem;
-  background-color: white;
-  transition: all 0.3s ease;
-  color: #333;
-}
-
-.orginp:focus {
-  outline: none;
-  border-color: #c9a200;
-  box-shadow: 0 0 0 0.1875rem rgba(201, 162, 0, 0.2);
 }
 
 @media (max-width: 64rem) {

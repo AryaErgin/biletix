@@ -2,9 +2,9 @@
   max-width: 50rem;
   margin: 3.75rem auto;
   padding: 2.5rem;
-  background: linear-gradient(145deg, #ffffff, #f3f3f3);
+  background: var(--color-surface);
   border-radius: 1.25rem;
-  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1rem 2rem var(--shadow-primary);
   position: relative;
   overflow: hidden;
 }
@@ -16,12 +16,12 @@
   left: 0;
   width: 100%;
   height: 0.25rem;
-  background: linear-gradient(90deg, #ffcc00, #ffd700);
+  background: var(--color-primary-gradient);
 }
 
 .profile-container h2 {
   text-align: center;
-  color: #2c3e50;
+  color: var(--color-text-primary);
   font-size: 2.5rem;
   margin-bottom: 2.5rem;
   font-weight: 700;
@@ -36,21 +36,21 @@
 .info-group {
   margin-bottom: 1.5rem;
   padding: 1.25rem;
-  background-color: #ffffff;
+  background-color: var(--color-background);
   border-radius: 0.75rem;
-  box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0.25rem 1rem var(--shadow-primary);
+  transition: var(--theme-transition);
 }
 
 .info-group:hover {
   transform: translateY(-0.25rem);
-  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.5rem 1.5rem var(--shadow-secondary);
 }
 
 .info-group label {
   display: block;
   font-weight: 600;
-  color: #7f8c8d;
+  color: var(--color-text-secondary);
   margin-bottom: 0.5rem;
   font-size: 0.875rem;
   text-transform: uppercase;
@@ -59,7 +59,7 @@
 
 .info-group p {
   margin: 0;
-  color: #2c3e50;
+  color: var(--color-text-primary);
   font-size: 1.125rem;
   font-weight: 500;
 }
@@ -78,15 +78,15 @@
 }
 
 .verified {
-  background-color: rgba(46, 213, 115, 0.15);
-  color: #2ed573;
-  border: 0.0625rem solid rgba(46, 213, 115, 0.3);
+  background-color: var(--color-success-transparent);
+  color: var(--color-success);
+  border: 0.0625rem solid var(--color-success);
 }
 
 .not-verified {
-  background-color: rgba(255, 71, 87, 0.15);
-  color: #ff4757;
-  border: 0.0625rem solid rgba(255, 71, 87, 0.3);
+  background-color: var(--color-error-transparent);
+  color: var(--color-error);
+  border: 0.0625rem solid var(--color-error);
 }
 
 .profile-actions {
@@ -103,55 +103,55 @@
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: var(--theme-transition);
   text-transform: uppercase;
   letter-spacing: 0.0625rem;
 }
 
 .password-reset-btn {
-  background: linear-gradient(135deg, #ffcc00, #ffd700);
-  color: #2c3e50;
+  background: var(--color-primary-gradient);
+  color: var(--color-text-primary);
 }
 
 .password-reset-btn:hover {
-  background: linear-gradient(135deg, #ffd700, #ffcc00);
+  background: var(--color-primary-gradient-alt);
   transform: translateY(-0.25rem);
-  box-shadow: 0 0.5rem 1rem rgba(255, 204, 0, 0.2);
+  box-shadow: 0 0.5rem 1rem var(--shadow-primary);
 }
 
 .password-reset-btn:disabled {
-  background: #e0e0e0;
-  color: #999;
+  background: var(--color-disabled);
+  color: var(--color-text-disabled);
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
 }
 
 .logout-btn {
-  background: linear-gradient(135deg, #ff4757, #ff6b81);
-  color: white;
+  background: var(--color-error-gradient);
+  color: var(--color-text-primary);
 }
 
 .logout-btn:hover {
-  background: linear-gradient(135deg, #ff6b81, #ff4757);
+  background: var(--color-error-gradient-alt);
   transform: translateY(-0.25rem);
-  box-shadow: 0 0.5rem 1rem rgba(255, 71, 87, 0.2);
+  box-shadow: 0 0.5rem 1rem var(--color-error-transparent);
 }
 
 .delete-account-btn {
-  background: linear-gradient(135deg, #2c3e50, #34495e);
-  color: white;
+  background: var(--color-danger-gradient);
+  color: var(--color-text-primary);
 }
 
 .delete-account-btn:hover {
-  background: linear-gradient(135deg, #34495e, #2c3e50);
+  background: var(--color-danger-gradient-alt);
   transform: translateY(-0.25rem);
-  box-shadow: 0 0.5rem 1rem rgba(44, 62, 80, 0.2);
+  box-shadow: 0 0.5rem 1rem var(--color-danger-transparent);
 }
 
 .delete-account-btn:disabled {
-  background: #e0e0e0;
-  color: #999;
+  background: var(--color-disabled);
+  color: var(--color-text-disabled);
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
@@ -161,15 +161,15 @@
   margin-top: 1.5rem;
   padding: 1.5rem;
   border-radius: 0.75rem;
-  background-color: rgba(255, 71, 87, 0.1);
-  border: 0.0625rem solid rgba(255, 71, 87, 0.3);
+  background-color: var(--color-error-transparent);
+  border: 0.0625rem solid var(--color-error);
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .delete-confirm p {
-  color: #ff4757;
+  color: var(--color-error);
   margin-bottom: 1rem;
   font-size: 1rem;
   text-align: center;
@@ -179,18 +179,80 @@
   width: 100%;
   padding: 1rem;
   margin-bottom: 1rem;
-  border: 0.0625rem solid #ddd;
+  border: 0.0625rem solid var(--color-border);
   border-radius: 0.75rem;
   font-size: 1rem;
-  background-color: white;
-  transition: border-color 0.3s ease;
+  background-color: var(--color-background);
+  transition: var(--theme-transition);
   box-sizing: border-box;
+  color: var(--color-text-primary);
 }
 
 .passwordinp:focus {
-  border-color: #ffcc00;
+  border-color: var(--color-primary);
   outline: none;
-  box-shadow: 0 0 0 0.25rem rgba(255, 204, 0, 0.1);
+  box-shadow: 0 0 0.25rem var(--color-primary-transparent);
+}
+
+.profile-actions button {
+  padding: 1rem;
+  border: none;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--theme-transition);
+  text-transform: uppercase;
+  letter-spacing: 0.0625rem;
+}
+
+.password-reset-btn {
+  background: var(--color-primary-gradient);
+  color: var(--color-text-primary);
+}
+
+.password-reset-btn:hover {
+  background: var(--color-primary-gradient-alt);
+  transform: translateY(-0.25rem);
+  box-shadow: 0 0.5rem 1rem var(--shadow-primary);
+}
+
+.password-reset-btn:disabled {
+  background: var(--color-disabled);
+  color: var(--color-text-disabled);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.logout-btn {
+  background-color: var(--color-signout);
+  color: var(--color-text-primary);
+}
+
+.logout-btn:hover {
+  background-color: var(--color-signout-hover);
+  transform: translateY(-0.25rem);
+  box-shadow: 0 0.5rem 1rem rgba(255, 107, 107, 0.2);
+}
+
+.delete-account-btn {
+  background-color: var(--color-delete-account);
+  color: var(--color-text-primary);
+}
+
+.delete-account-btn:hover {
+  background-color: var(--color-delete-account-hover);
+  transform: translateY(-0.25rem);
+  box-shadow: 0 0.5rem 1rem rgba(192, 57, 43, 0.2);
+}
+
+.delete-account-btn:disabled {
+  background: var(--color-disabled);
+  color: var(--color-text-disabled);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 .delete-confirm button {
@@ -202,31 +264,37 @@
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: var(--theme-transition);
   text-transform: uppercase;
   letter-spacing: 0.0625rem;
 }
 
 .delete-confirm button:first-of-type {
-  background: linear-gradient(135deg, #ff4757, #ff6b81);
-  color: white;
+  background-color: var(--color-error);
+  color: var(--color-text-primary);
 }
 
 .delete-confirm button:first-of-type:hover {
-  background: linear-gradient(135deg, #ff6b81, #ff4757);
+  background-color: var(--color-error-light);
   transform: translateY(-0.25rem);
-  box-shadow: 0 0.5rem 1rem rgba(255, 71, 87, 0.2);
+  box-shadow: 0 0.5rem 1rem var(--color-error-transparent);
 }
 
 .delete-confirm button:last-of-type {
-  background: linear-gradient(135deg, #7f8c8d, #95a5a6);
-  color: white;
+  background-color: var(--color-cancel);
+  color: var(--color-text-primary);
 }
 
 .delete-confirm button:last-of-type:hover {
-  background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+  background-color: var(--color-cancel-hover);
   transform: translateY(-0.25rem);
   box-shadow: 0 0.5rem 1rem rgba(127, 140, 141, 0.2);
+}
+
+.delete-confirm button:last-of-type:hover {
+  background: var(--color-secondary-gradient-alt);
+  transform: translateY(-0.25rem);
+  box-shadow: 0 0.5rem 1rem var(--color-secondary-transparent);
 }
 
 .error-message,
@@ -240,22 +308,15 @@
 }
 
 .error-message {
-  background-color: rgba(255, 71, 87, 0.15);
-  color: #ff4757;
-  border: 0.0625rem solid rgba(255, 71, 87, 0.3);
+  background-color: var(--color-error-transparent);
+  color: var(-- color-error);
+  border: 0.0625rem solid var(--color-error);
 }
 
 .success-message {
-  background-color: rgba(46, 213, 115, 0.15);
-  color: #2ed573;
-  border: 0.0625rem solid rgba(46, 213, 115, 0.3);
-}
-
-.profile-loading {
-  text-align: center;
-  padding: 2.5rem;
-  font-size: 1.25rem;
-  color: #7f8c8d;
+  background-color: var(--color-success-transparent);
+  color: var(--color-success);
+  border: 0.0625rem solid var(--color-success);
 }
 
 .edit-profile-btn, .save-profile-btn, .cancel-edit-btn {
@@ -273,54 +334,55 @@
 }
 
 .edit-profile-btn {
-  background: linear-gradient(135deg, #3498db, #2980b9);
-  color: white;
+  background-color: var(--color-edit-profile);
+  color: var(--color-text-primary);
 }
 
 .edit-profile-btn:hover {
-  background: linear-gradient(135deg, #2980b9, #3498db);
+  background-color: var(--color-edit-profile-hover);
   transform: translateY(-0.25rem);
   box-shadow: 0 0.5rem 1rem rgba(52, 152, 219, 0.2);
 }
 
 .save-profile-btn {
-  background: linear-gradient(135deg, #2ecc71, #27ae60);
-  color: white;
+  background-color: var(--color-success);
+  color: var(--color-text-primary);
 }
 
 .save-profile-btn:hover {
-  background: linear-gradient(135deg, #27ae60, #2ecc71);
+  background-color: var(--color-success-light);
   transform: translateY(-0.25rem);
-  box-shadow: 0 0.5rem 1rem rgba(46, 204, 113, 0.2);
+  box-shadow: 0 0.5rem 1rem var(--color-success-transparent);
 }
 
 .cancel-edit-btn {
-  background: linear-gradient(135deg, #e74c3c, #c0392b);
-  color: white;
+  background-color: var(--color-error);
+  color: var(--color-text-primary);
 }
 
 .cancel-edit-btn:hover {
-  background: linear-gradient(135deg, #c0392b, #e74c3c);
+  background-color: var(--color-error-light);
   transform: translateY(-0.25rem);
-  box-shadow: 0 0.5rem 1rem rgba(231, 76, 60, 0.2);
+  box-shadow: 0 0.5rem 1rem var(--color-error-transparent);
 }
 
 .profile-input {
   width: 100%;
   padding: 1rem;
-  border: 0.0625rem solid #ddd;
+  border: 0.0625rem solid var(--color-border);
   border-radius: 0.75rem;
   font-size: 1rem;
-  background-color: white;
-  transition: border-color 0.3s ease;
+  background-color: var(--color-background);
+  transition: var(--theme-transition);
   box-sizing: border-box;
   margin-bottom: 1rem;
+  color: var(--color-text-primary);
 }
 
 .profile-input:focus {
-  border-color: #ffcc00;
+  border-color: var(--color-primary);
   outline: none;
-  box-shadow: 0 0 0 0.25rem rgba(255, 204, 0, 0.1);
+  box-shadow: 0 0 0 0.25rem var(--color-primary-transparent);
 }
 
 @media (max-width: 48rem) {
