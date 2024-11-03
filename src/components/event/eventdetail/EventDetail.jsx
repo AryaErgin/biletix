@@ -18,27 +18,30 @@ const EventDetail = () => {
 
     useEffect(() => {
         const fetchEvent = async () => {
-            const docRef = doc(db, 'events', eventId);
-            const docSnap = await getDoc(docRef);
-            if (docSnap.exists()) {
-                const eventData = docSnap.data();
-                setEvent(eventData);
-                setIsRegistered(eventData.registeredUsers?.includes(auth.currentUser?.uid));
+        try {
+            const eventDoc = await getDoc(doc(db, 'events', eventId));
+            if (eventDoc.exists()) {
+            setEvent({ id: eventDoc.id, ...eventDoc.data() });
             } else {
-                console.log('No such document!');
+            console.log('No such event!');
             }
+        } catch (error) {
+            console.error('Error fetching event:', error);
+        }
         };
+
         fetchEvent();
     }, [eventId]);
 
-    useEffect(() => {
-        return () => {
-            if (markerRef.current) {
-                markerRef.current.setMap(null);
-            }
-            mapRef.current = null;
-        };
-    }, []);
+
+        useEffect(() => {
+            return () => {
+                if (markerRef.current) {
+                    markerRef.current.setMap(null);
+                }
+                mapRef.current = null;
+            };
+        }, []);
 
     useEffect(() => {
         const updateMarker = () => {
@@ -68,7 +71,7 @@ const EventDetail = () => {
         }
     }, [event?.coordinates]);
 
-    if (!event) return <div>Loading...</div>;
+    if (!event) return <div>Yükleniyor...</div>;
 
     const handleNext = () => {
         setCurrentMediaIndex((prevIndex) => (prevIndex + 1) % event.mediaUrls.length);

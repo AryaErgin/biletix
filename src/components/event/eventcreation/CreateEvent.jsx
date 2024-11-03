@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDrag, useDrop, DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { auth, db, storage } from '../../../firebase';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, updateDoc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { GoogleMap, Autocomplete } from '@react-google-maps/api';
 import { placeholder } from '../../../photos';
@@ -159,13 +159,34 @@ const CreateEvent = () => {
         return;
       }
 
+      const eventDoc = await addDoc(collection(db, 'events'), {
+        name,
+        userEmail: user.email,
+        location,
+        coordinates,
+        date,
+        maxCapacity,
+        ageRange,
+        description,
+        mediaUrls: [],
+        thumbnailUrl: '',
+        organizer,
+        status: "pending",
+        createdBy: user.uid,
+        contactInfo,
+      });
+
+      const eventId = eventDoc.id;
+      const sanitizedEventName = name.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+      const eventDirectory = `events/${eventId}_${sanitizedEventName}`;
+
       let mediaUrls = [];
       let thumbnailUrl = placeholder;
 
       for (let i = 0; i < media.length; i++) {
         const file = media[i];
         const uniqueFileName = `${uuidv4()}_${file.name}`;
-        const fileRef = ref(storage, `events/${uniqueFileName}`);
+        const fileRef = ref(storage, `${eventDirectory}/${uniqueFileName}`);
         await uploadBytes(fileRef, file);
         const fileUrl = await getDownloadURL(fileRef);
         mediaUrls.push(fileUrl);
@@ -175,21 +196,9 @@ const CreateEvent = () => {
         }
       }
 
-      await addDoc(collection(db, 'events'), {
-        name,
-        userEmail: user.email,
-        location,
-        coordinates,
-        date,
-        maxCapacity,
-        ageRange,
-        description,
+      await updateDoc(eventDoc, {
         mediaUrls,
         thumbnailUrl,
-        organizer,
-        status: "pending",
-        createdBy: auth.currentUser.uid,
-        contactInfo,
       });
 
       setSuccess('Event submitted for approval!');
@@ -198,6 +207,7 @@ const CreateEvent = () => {
         navigate('/');
       }, 3000);
     } catch (error) {
+      console.error('Error creating event:', error);
       setError('Error creating event: ' + error.message);
       setSuccess('');
     }

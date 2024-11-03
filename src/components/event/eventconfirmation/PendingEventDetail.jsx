@@ -18,14 +18,18 @@ const PendingEventDetail = () => {
 
   useEffect(() => {
     const fetchEvent = async () => {
-      const docRef = doc(db, 'events', eventId);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setEvent(docSnap.data());
-      } else {
-        console.log('No such document!');
+      try {
+        const eventDoc = await getDoc(doc(db, 'events', eventId));
+        if (eventDoc.exists()) {
+          setEvent({ id: eventDoc.id, ...eventDoc.data() });
+        } else {
+          console.log('No such event!');
+        }
+      } catch (error) {
+        console.error('Error fetching event:', error);
       }
     };
+
     fetchEvent();
   }, [eventId]);
 
@@ -129,7 +133,7 @@ const PendingEventDetail = () => {
               </video>
             ) : (
               <img
-                src={event.mediaUrls[currentMediaIndex]}
+              src={event.mediaUrls[currentMediaIndex]}
                 alt={event.name}
                 className="media-item"
               />

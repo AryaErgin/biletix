@@ -64,20 +64,21 @@ const MyEvents = () => {
 
     useEffect(() => {
         const fetchEvents = async () => {
-            if (!auth.currentUser) {
-                const unsubscribe = auth.onAuthStateChanged(async (user) => {
-                    if (user) {
-                        await loadEvents(user.uid);
-                        unsubscribe();
-                    }
-                });
-            } else {
-                await loadEvents(auth.currentUser.uid);
-            }
+          const user = auth.currentUser;
+          if (user) {
+            await loadEvents(user.uid);
+          } else {
+            const unsubscribe = auth.onAuthStateChanged(async (newUser) => {
+              if (newUser) {
+                await loadEvents(newUser.uid);
+                unsubscribe();
+              }
+            });
+          }
         };
-
+      
         fetchEvents();
-    }, []);
+      }, []);
 
     const loadEvents = async (uid) => {
         const q = query(collection(db, 'events'), where('createdBy', '==', uid));
@@ -144,38 +145,74 @@ const MyEvents = () => {
       const handleUpdate = async (e) => {
         e.preventDefault();
         try {
-            const updatedEvent = { ...editingEvent };
-    
-            // Handle media files
-            const mediaUrls = [];
-            for (let file of editingMedia) {
-                if (file instanceof File) {
-                    // Generate unique filename to prevent overwrites
-                    const uniqueFileName = `${uuidv4()}_${file.name}`;
-                    const storageRef = ref(storage, `events/${uniqueFileName}`);
-                    await uploadBytes(storageRef, file);
-                    const url = await getDownloadURL(storageRef);
-                    mediaUrls.push(url);
-                } else {
-                    mediaUrls.push(file);
+          const updatedEvent = { ...editingEvent };
+          const eventId = editingEvent.id;
+          const sanitizedEventName = updatedEvent.name.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+          const eventDirectory = `events/${eventId}_${sanitizedEventName}`;
+      
+          // Handle media files
+          const mediaUrls = [];
+          for (let file of editingMedia) {
+            if (file instanceof File) {
+              // New file upload
+              const uniqueFileName = `${uuidv4()}_${file.name}`;
+              const fileRef = ref(storage, `${eventDirectory}/${uniqueFileName}`);
+              await uploadBytes(fileRef, file);
+              const url = await getDownloadURL(fileRef);
+              mediaUrls.push(url);
+            } else if (typeof file === 'string') {
+              // Check if the file is already in the correct directory
+              if (file.includes(eventDirectory)) {
+                mediaUrls.push(file);
+              } else {
+                try {
+                  // Extract the original path from the URL
+                  const urlParts = file.split('/o/')[1].split('?')[0];
+                  const decodedPath = decodeURIComponent(urlParts);
+                  
+                  // Create references for the source and destination
+                  const originalFileRef = ref(storage, decodedPath);
+                  const fileName = decodedPath.split('/').pop();
+                  const newFileRef = ref(storage, `${eventDirectory}/${fileName}`);
+      
+                  // Get the file data from the original location
+                  const originalFileBlob = await originalFileRef.getDownloadURL()
+                    .then(url => fetch(url, { mode: 'cors' }))
+                    .then(response => response.blob());
+      
+                  // Upload to new location
+                  await uploadBytes(newFileRef, originalFileBlob);
+                  const newUrl = await getDownloadURL(newFileRef);
+                  mediaUrls.push(newUrl);
+                } catch (error) {
+                  console.error('Error moving file:', error);
+                  // If we can't move the file, keep the original URL
+                  mediaUrls.push(file);
                 }
+              }
             }
-            
-            updatedEvent.mediaUrls = mediaUrls;
-            
-            await updateDoc(doc(db, 'events', editingEvent.id), updatedEvent);
-
-            setEvents(events.map(event => 
-                event.id === editingEvent.id ? updatedEvent : event
-            ));
-            
-            setEditingEvent(null);
-            setEditingMedia([]);
-    
+          }
+          
+          updatedEvent.mediaUrls = mediaUrls;
+          
+          // Update the event document
+          await updateDoc(doc(db, 'events', eventId), updatedEvent);
+      
+          // Update the local state
+          setEvents(events.map(event => 
+            event.id === eventId ? updatedEvent : event
+          ));
+          
+          setEditingEvent(null);
+          setEditingMedia([]);
+      
+          alert('Event updated successfully!');
+      
         } catch (error) {
-            console.error('Error updating event:', error);
+          console.error('Error updating event:', error);
+          alert('Failed to update event. Please try again.');
         }
-    };
+      };
 
     const handlePlaceSelect = () => {
       if (autocomplete) {
@@ -233,19 +270,19 @@ const MyEvents = () => {
                             <p><span>Konteyjan Sınırı:</span> {event.maxCapacity}</p>
                             <p><span>Yaş Aaralığı:</span> {event.ageRange}</p>
                             <p><span>Organizatör:</span> {event.organizer}</p>
-                            <p className="status-container">
-                              <span>Etkinlik Durumu:</span>
-                              {event.status.toLowerCase() === 'pending' && <div className={`status-badge ${event.status.toLowerCase()}`}>
-                                    <span>
-                                        <i className="fas fa-clock"></i> Beklemede
-                                    </span>
-                                </div>}
-                                {event.status.toLowerCase() === 'approved' && <div className="status-badge approved">
-                                    <span>
+                            <div className="status-container">
+                            <span>Etkinlik Durumu: </span>
+                                {event.status.toLowerCase() === 'pending' && (
+                                <span className={`status-badge ${event.status.toLowerCase()}`}>
+                                    <i className="fas fa-clock"></i> Beklemede
+                                </span>
+                                )}
+                                {event.status.toLowerCase() === 'approved' && (
+                                <span className="status-badge approved">
                                     <i className="fas fa-check"></i> Onaylandı
-                                    </span>
-                                </div>}
-                            </p>
+                                </span>
+                                )}
+                            </div>
                         </div>
                         <div className="event-actions">
                             <Link to={`/etkinlik/${event.id}`} className="btn btn-view">Görüntüle</Link>
