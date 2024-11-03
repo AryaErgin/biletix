@@ -223,23 +223,14 @@
 
 @media (hover: none) {
   .search-bar button {
+    background: var(--color-secondary);
+    color: var(--color-text-primary);
+  }
+  
+  .search-bar button:active {
     background: var(--color-text-primary);;
     color: var(--color-secondary);
   }
 
-  .search-bar button:active {
-    background: var(--color-secondary);
-    color: var(--color-text-primary);
-  }
-}
-
-@media (prefers-contrast: high) {
-  .search-bar input[type="text"] {
-    border: 0.1875rem solid #000 ;
-  }
-
-  .search-bar button {
-    background: #000;
-    color: #ffd900;
-  }
+  
 }
