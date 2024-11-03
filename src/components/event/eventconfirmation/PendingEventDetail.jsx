@@ -128,14 +128,14 @@ const PendingEventDetail = () => {
         {event.mediaUrls.length > 0 && (
           <div className="media-container">
             {event.mediaUrls[currentMediaIndex].includes('.mp4?alt=media&token=') ? (
-              <video className="media-item" controls>
+              <video className="media-items" controls>
                 <source src={event.mediaUrls[currentMediaIndex]} />
               </video>
             ) : (
               <img
-              src={event.mediaUrls[currentMediaIndex]}
+                src={event.mediaUrls[currentMediaIndex]}
                 alt={event.name}
-                className="media-item"
+                className="media-items"
               />
             )}
           </div>
@@ -186,15 +186,15 @@ const PendingEventDetail = () => {
       <p><strong>Konteyjan Sınırı: {event.maxCapacity || 'Sınırsız'}</strong></p>
       <p><strong>Yaş Aralığı: {!event.ageRange ? 'Her Yaşa Uygundur' : event.ageRange === 'all' ? 'All Ages' : event.ageRange}</strong></p>
       
-      <p><strong>İletişim Bilgileri:</strong> {event.contactInfo}</p>
+      <p><strong>İletişim Bilgileri:</strong></p>
             <div>
-                {event.description.split('\n').map((line, index) => (
+                {event.contactInfo.split('\n').map((line, index) => (
                     <p key={index}>{line}</p>
                 ))}
             </div>
       
       <p>
-        <strong>Etkinlik Bilgileri:</strong> {event.description}
+        <strong>Etkinlik Bilgileri:</strong>
       </p>
       <div>
         {event.description.split('\n').map((line, index) => (

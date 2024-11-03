@@ -63,7 +63,8 @@
 
 .pending-event-detail strong {
     color: var(--color-text-primary);
-    font-weight: 600;
+    font-size: 1.5rem;
+    font-weight: bolder;
 }
 
 .confirmation-buttons {

@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { auth, db, storage } from '../../../firebase';
-import { collection, query, where, getDocs, deleteDoc, doc, updateDoc, getDoc } from 'firebase/firestore';
+import { collection, query, where, getDocs, deleteDoc, doc, updateDoc, getDoc, arrayRemove } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
 import { GoogleMap, Autocomplete } from '@react-google-maps/api';
 import './MyEvents.css';
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { useDrag, useDrop, DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { v4 as uuidv4 } from 'uuid';
@@ -26,7 +26,7 @@ const MediaItem = ({ file, index, moveMedia, removeMedia }) => {
     });
   
     return (
-      <div ref={(node) => ref(drop(node))} className="media-item">
+      <div ref={(node) => ref(drop(node))} className="media-items">
         {typeof file === 'string' ? (
           file.includes('mp4') ? (
             <video src={file} className="preview-media" controls />
@@ -114,9 +114,58 @@ const MyEvents = () => {
     };
 
     const confirmDelete = async () => {
-        await deleteDoc(doc(db, 'events', deleteConfirmation));
-        setEvents(events.filter(event => event.id !== deleteConfirmation));
-        setDeleteConfirmation(null);
+        try {
+            // Get the event data before deletion
+            const eventDoc = await getDoc(doc(db, 'events', deleteConfirmation));
+            if (!eventDoc.exists()) {
+                throw new Error('Event not found');
+            }
+            const eventData = eventDoc.data();
+    
+            // Remove event from all registered users' registeredEvents array
+            if (eventData.registeredUsers && eventData.registeredUsers.length > 0) {
+                await Promise.all(eventData.registeredUsers.map(async (userId) => {
+                    const userRef = doc(db, 'users', userId);
+                    await updateDoc(userRef, {
+                        registeredEvents: arrayRemove(deleteConfirmation)
+                    });
+                }));
+            }
+    
+            // Delete all media files from storage
+            if (eventData.mediaUrls && eventData.mediaUrls.length > 0) {
+                await Promise.all(eventData.mediaUrls.map(async (url) => {
+                    try {
+                        const fileRef = ref(storage, url);
+                        await deleteObject(fileRef);
+                    } catch (error) {
+                        console.error('Error deleting file:', error);
+                        // Continue with deletion even if a file fails to delete
+                    }
+                }));
+            }
+    
+            // Delete thumbnail if it's different from mediaUrls
+            if (eventData.thumbnailUrl && !eventData.mediaUrls.includes(eventData.thumbnailUrl)) {
+                try {
+                    const thumbnailRef = ref(storage, eventData.thumbnailUrl);
+                    await deleteObject(thumbnailRef);
+                } catch (error) {
+                    console.error('Error deleting thumbnail:', error);
+                    // Continue with deletion even if thumbnail fails to delete
+                }
+            }
+    
+            // Finally delete the event document
+            await deleteDoc(doc(db, 'events', deleteConfirmation));
+            
+            setEvents(events.filter(event => event.id !== deleteConfirmation));
+            setDeleteConfirmation(null);
+    
+        } catch (error) {
+            console.error('Error during event deletion:', error);
+            alert('An error occurred while deleting the event. Please try again.');
+        }
     };
 
     const handleEdit = (event) => {
@@ -312,7 +361,7 @@ const MyEvents = () => {
                         accept="image/*,video/*"
                         />
                         <DndProvider backend={HTML5Backend}>
-                        <div className="media-preview">
+                        <div className="media-previews">
                             {editingMedia.map((media, index) => (
                             <MediaItem
                                 key={index}

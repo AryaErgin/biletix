@@ -84,7 +84,8 @@
 
 .event-detail strong {
     color: var(--color-text-secondary);
-    font-weight: 600;
+    font-weight: bolder;
+    font-size: 1.5rem;
 }
 
 .map-containers {

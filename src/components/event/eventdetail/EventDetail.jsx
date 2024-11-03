@@ -177,13 +177,13 @@ const EventDetail = () => {
             <p><strong>Tarih:</strong> {event.date}</p>
             <p><strong>Konteyjan Sınırı: {event.maxCapacity || 'Sınırsız'}</strong></p>
             <p><strong>Yaş Aralığı: {!event.ageRange ? 'Her Yaşa Uygundur' : event.ageRange === 'all' ? 'All Ages' : event.ageRange}</strong></p>
-            <p><strong>İletişim Bilgileri:</strong> {event.contactInfo}</p>
+            <p><strong>İletişim Bilgileri:</strong></p>
             <div>
-                {event.description.split('\n').map((line, index) => (
+                {event.contactInfo.split('\n').map((line, index) => (
                     <p key={index}>{line}</p>
                 ))}
             </div>
-            <p><strong>Etkinlik Bilgileri:</strong> {event.description}</p>
+            <p><strong>Etkinlik Bilgileri:</strong></p>
             <div>
                 {event.description.split('\n').map((line, index) => (
                     <p key={index}>{line}</p>

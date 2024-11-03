@@ -31,26 +31,38 @@ const MediaItem = ({ file, index, moveMedia, removeMedia, isThumbnail, selectThu
       ref={(node) => ref(drop(node))} 
       className={`media-item ${isThumbnail ? 'selected-thumbnail' : ''}`}
     >
-      {file.type.startsWith('image') ? (
-        <img src={URL.createObjectURL(file)} alt="preview" className="preview-image" />
-      ) : (
-        <video className="preview-video" controls>
-          <source src={URL.createObjectURL(file)} />
-        </video>
-      )}
-      <div className="media-item-details">
-        <span>{file.name}</span>
-        <button type="button" className="remove-button" onClick={() => removeMedia(index)}>
-          X
+      <div className="media-preview-container">
+        {typeof file === 'string' ? (
+          file.includes('mp4') ? (
+            <video src={file} className="preview-media" controls />
+          ) : (
+            <img src={file} alt="preview" className="preview-media" />
+          )
+        ) : (
+          <img 
+            src={URL.createObjectURL(file)} 
+            alt="preview" 
+            className="preview-media" 
+          />
+        )}
+        <button 
+          type="button" 
+          className={`thumbnail-button ${isThumbnail ? 'is-thumbnail' : ''}`} 
+          onClick={() => selectThumbnail(index)}
+        >
+          {isThumbnail ? 'Başlık' : 'Başlık Seç'}
         </button>
-        <button type="button" className="thumbnail-button" onClick={() => selectThumbnail(index)}>
-          {isThumbnail ? 'Current Thumbnail' : 'Set as Thumbnail'}
+        <button 
+          type="button" 
+          className="remove-button" 
+          onClick={() => removeMedia(index)}
+        >
+          ×
         </button>
       </div>
     </div>
   );
 };
-
 
 const CreateEvent = () => {
   const [name, setName] = useState('');
