@@ -19,13 +19,17 @@
 }
 
 .your-logo {
-  height: 3.5rem;
-  margin-right: 0.9375rem;
+  align-items: center;
+  height: 5rem;
 }
 
 .integra-logo {
-  height: 2rem;
+  margin-left: 0;
+  font-size: 2.25rem;
   margin-right: 1rem;
+  align-items: center;
+  color: #f8f9fa;
+  font-weight: bolder;
 }
 
 nav {
@@ -114,11 +118,11 @@ nav a:hover {
 
 @media (min-width: 90rem) {
   .your-logo {
-    height: 4rem;
+    height: 5rem;
   }
 
   .integra-logo {
-    height: 2.5rem;
+    font-size: 2.25rem;
   }
 
   nav a {
@@ -208,7 +212,7 @@ nav a:hover {
   }
 
   .integra-logo {
-    height: 2.25rem;
+    font-size: 2rem;
   }
 
   nav.open {
@@ -234,7 +238,7 @@ nav a:hover {
   }
 
   .integra-logo {
-    height: 2rem;
+    font-size: 1.75rem;
   }
 
   .hamburger {
@@ -265,7 +269,7 @@ nav a:hover {
   }
 
   .integra-logo {
-    height: 1.5rem;
+    font-size: 1.5rem;
   }
 
   .hamburger {

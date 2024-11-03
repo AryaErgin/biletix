@@ -1,9 +1,55 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { auth, db } from '../../../firebase';
+import { auth, db, storage } from '../../../firebase';
 import { collection, query, where, getDocs, deleteDoc, doc, updateDoc, getDoc } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
 import { GoogleMap, Autocomplete } from '@react-google-maps/api';
 import './MyEvents.css';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { useDrag, useDrop, DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { v4 as uuidv4 } from 'uuid';
+
+const MediaItem = ({ file, index, moveMedia, removeMedia }) => {
+    const [, ref] = useDrag({
+      type: 'media',
+      item: { index },
+    });
+  
+    const [, drop] = useDrop({
+      accept: 'media',
+      hover: (draggedItem) => {
+        if (draggedItem.index !== index) {
+          moveMedia(draggedItem.index, index);
+          draggedItem.index = index;
+        }
+      },
+    });
+  
+    return (
+      <div ref={(node) => ref(drop(node))} className="media-item">
+        {typeof file === 'string' ? (
+          file.includes('mp4') ? (
+            <video src={file} className="preview-media" controls />
+          ) : (
+            <img src={file} alt="preview" className="preview-media" />
+          )
+        ) : (
+          <img 
+            src={URL.createObjectURL(file)} 
+            alt="preview" 
+            className="preview-media" 
+          />
+        )}
+        <button 
+          type="button" 
+          className="remove-media-button" 
+          onClick={() => removeMedia(index)}
+        >
+          ×
+        </button>
+      </div>
+    );
+  };
 
 const MyEvents = () => {
     const [events, setEvents] = useState([]);
@@ -14,6 +60,7 @@ const MyEvents = () => {
     const mapRef = useRef(null);
     const markerRef = useRef(null);
     const [loading, setLoading] = useState(true);
+    const [editingMedia, setEditingMedia] = useState([]);
 
     useEffect(() => {
         const fetchEvents = async () => {
@@ -73,13 +120,61 @@ const MyEvents = () => {
 
     const handleEdit = (event) => {
         setEditingEvent(event);
+        setEditingMedia(event.mediaUrls || []);
     };
 
-    const handleUpdate = async (e) => {
+    const handleMediaChange = (e) => {
+        const files = Array.from(e.target.files);
+        setEditingMedia((prevMedia) => [...prevMedia, ...files]);
+      };
+
+    const handleRemoveMedia = (index) => {
+        setEditingMedia((prevMedia) => prevMedia.filter((_, i) => i !== index));
+    };
+
+    const handleReorderMedia = (fromIndex, toIndex) => {
+        setEditingMedia((prevMedia) => {
+          const updatedMedia = [...prevMedia];
+          const [movedItem] = updatedMedia.splice(fromIndex, 1);
+          updatedMedia.splice(toIndex, 0, movedItem);
+          return updatedMedia;
+        });
+      };
+
+      const handleUpdate = async (e) => {
         e.preventDefault();
-        await updateDoc(doc(db, 'events', editingEvent.id), editingEvent);
-        setEvents(events.map(event => event.id === editingEvent.id ? editingEvent : event));
-        setEditingEvent(null);
+        try {
+            const updatedEvent = { ...editingEvent };
+    
+            // Handle media files
+            const mediaUrls = [];
+            for (let file of editingMedia) {
+                if (file instanceof File) {
+                    // Generate unique filename to prevent overwrites
+                    const uniqueFileName = `${uuidv4()}_${file.name}`;
+                    const storageRef = ref(storage, `events/${uniqueFileName}`);
+                    await uploadBytes(storageRef, file);
+                    const url = await getDownloadURL(storageRef);
+                    mediaUrls.push(url);
+                } else {
+                    mediaUrls.push(file);
+                }
+            }
+            
+            updatedEvent.mediaUrls = mediaUrls;
+            
+            await updateDoc(doc(db, 'events', editingEvent.id), updatedEvent);
+
+            setEvents(events.map(event => 
+                event.id === editingEvent.id ? updatedEvent : event
+            ));
+            
+            setEditingEvent(null);
+            setEditingMedia([]);
+    
+        } catch (error) {
+            console.error('Error updating event:', error);
+        }
     };
 
     const handlePlaceSelect = () => {
@@ -168,6 +263,33 @@ const MyEvents = () => {
                             <h2>Etkinlik Editi</h2>
                             <button className="close-button" onClick={() => setEditingEvent(null)}>×</button>
                         </div>
+
+                        <div className="form-group">
+                            
+                        <label className="media-upload-label">Medya:</label>
+                        <input 
+                        type="file" 
+                        multiple 
+                        onChange={handleMediaChange}
+                        className="media-upload-input"
+                        accept="image/*,video/*"
+                        />
+                        <DndProvider backend={HTML5Backend}>
+                        <div className="media-preview">
+                            {editingMedia.map((media, index) => (
+                            <MediaItem
+                                key={index}
+                                file={media}
+                                index={index}
+                                moveMedia={handleReorderMedia}
+                                removeMedia={handleRemoveMedia}
+                            />
+                            ))}
+                        </div>
+                        </DndProvider>
+                    </div>
+
+                        
                         <form onSubmit={handleUpdate}>
                             <div className="form-group">
                                 <label>Etkinlik Adı:</label>

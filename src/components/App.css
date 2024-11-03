@@ -13,7 +13,7 @@
     --color-primary-gradient-alt: linear-gradient(90deg, #2980b9, #3498db);
     
     /* Secondary Colors (Reds) */
-    --color-secondary: #f8f9fa ;
+    --color-secondary: #f54e5c;
     --color-secondary-gradient: linear-gradient(45deg, #e74c3c, #eb6b5e);
     
     /* Tertiary Colors (Whites) */
@@ -68,7 +68,7 @@
     --color-primary-gradient-alt: linear-gradient(90deg, #1f618d, #2980b9);
     
     /* Secondary Colors (Darker Reds) */
-    --color-secondary: #333333;
+    --color-secondary: #8B2F3F;
     --color-secondary-gradient: linear-gradient(45deg, #c0392b, #e74c3c);
     
     /* Tertiary Colors (Blacks) */

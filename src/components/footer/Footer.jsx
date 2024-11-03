@@ -6,7 +6,7 @@ const Footer = () => {
     <footer className="footer">
       <div className="footer-columns">
         <div className="footer-column">
-          <h4>INTEGRA Etkinlik Sayfası</h4>
+          <h4>SteamNearMe</h4>
           <a 
             href="https://team3646.com" 
             target="_blank" 

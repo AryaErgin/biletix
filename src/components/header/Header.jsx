@@ -4,8 +4,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { auth, db } from "../../firebase"
 import './Header.css';
-import logo from "../../photos/logo.png";
-import logo1 from  "../../photos/logo1.png";
+import logo from "../../photos/logosonhal.png";
 import { useTheme } from '../../context/ThemeContext';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
@@ -51,7 +50,7 @@ const Header = () => {
       <div className="nav-container">
         <div className="logo-container">
           <img src={logo} alt="Your Logo" className="your-logo" />
-          <img src={logo1} alt="INTEGRA Logo" className="integra-logo" />
+          <h1 className="integra-logo">SteamNearMe</h1>
         </div>
         <div className={`hamburger ${isMenuOpen ? 'open' : ''}`} onClick={toggleMenu}>
           <span></span>
