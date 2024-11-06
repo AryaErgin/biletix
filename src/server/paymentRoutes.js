@@ -3,6 +3,8 @@ const Iyzipay = require('iyzipay');
 const router = express.Router();
 const { v4: uuidv4 } = require('uuid');
 const rateLimit = require("express-rate-limit");
+const admin = require('firebase-admin');
+const db = admin.firestore();
 
 const paymentLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -23,6 +25,19 @@ router.post('/create-payment', paymentLimiter, async (req, res) => {
     if (event.price !== req.body.price) {
         return res.status(400).json({ error: 'Invalid payment amount' });
     }
+
+    const conversationId = uuidv4();
+
+    try {
+        // Create transaction record first
+        const transactionRef = await db.collection('transactions').add({
+            eventId: eventId,
+            userId: paidBy,
+            amount: price,
+            status: 'pending',
+            createdAt: admin.firestore.FieldValue.serverTimestamp(),
+            conversationId: conversationId
+        });
 
     const request = {
         locale: Iyzipay.LOCALE.TR,
@@ -68,19 +83,34 @@ router.post('/create-payment', paymentLimiter, async (req, res) => {
         ]
     };
 
-    try {
         if (!req.body.price || !req.body.paidBy || !req.body.eventId) {
             return res.status(400).json({ error: 'Missing required fields' });
         }
         
-        iyzipay.checkoutFormInitialize.create(request, function (err, result) {
+        iyzipay.checkoutFormInitialize.create(request, async function (err, result) {
             if (err) {
-                console.error('Iyzipay error:', err);
+                // Update transaction status on error
+                await transactionRef.update({ 
+                    status: 'failed',
+                    error: err.message,
+                    lastUpdated: admin.firestore.FieldValue.serverTimestamp()
+                });
                 res.status(500).json({ error: 'An error occurred while initializing the payment.' });
             } else {
                 if (result.status === 'success') {
+                    // Update transaction with token
+                    await transactionRef.update({ 
+                        token: result.token,
+                        formInitialized: true,
+                        lastUpdated: admin.firestore.FieldValue.serverTimestamp()
+                    });
                     res.json({ status: 'success', checkoutFormContent: result.checkoutFormContent });
                 } else {
+                    await transactionRef.update({ 
+                        status: 'failed',
+                        error: result.errorMessage,
+                        lastUpdated: admin.firestore.FieldValue.serverTimestamp()
+                    });
                     res.status(400).json({ status: 'failure', errorMessage: result.errorMessage });
                 }
             }
@@ -88,26 +118,86 @@ router.post('/create-payment', paymentLimiter, async (req, res) => {
     } catch (error) {
         console.error('Payment error:', error);
         res.status(500).json({ 
-          error: 'Ödeme Başarısız Oldu', 
-          details: error.message 
+            error: 'Ödeme Başarısız Oldu', 
+            details: error.message 
         });
     }
 });
 
 // Retrieve payment result
-router.post('/payment-result', (req, res) => {
-    iyzipay.checkoutForm.retrieve({
-        locale: Iyzipay.LOCALE.TR,
-        conversationId: req.body.conversationId,
-        token: req.body.token
-    }, function (err, result) {
-        if (err) {
-            console.error('Iyzipay error:', err);
-            res.status(500).json({ error: 'An error occurred while retrieving the payment result.' });
-        } else {
-            res.json(result);
+router.post('/payment-result', async (req, res) => {
+    try {
+        // Find the transaction record
+        const transactionQuery = await db.collection('transactions')
+            .where('token', '==', req.body.token)
+            .limit(1)
+            .get();
+
+        if (transactionQuery.empty) {
+            return res.status(400).json({ error: 'Invalid transaction' });
         }
-    });
+
+        const transaction = transactionQuery.docs[0];
+
+        // Check if already processed
+        if (transaction.data().status === 'completed') {
+            return res.status(400).json({ error: 'Transaction already processed' });
+        }
+
+        iyzipay.checkoutForm.retrieve({
+            locale: Iyzipay.LOCALE.TR,
+            token: req.body.token
+        }, async function (err, result) {
+            if (err) {
+                await transaction.ref.update({ 
+                    status: 'failed',
+                    error: err.message,
+                    lastUpdated: admin.firestore.FieldValue.serverTimestamp()
+                });
+                return res.status(500).json({ error: 'Payment verification failed' });
+            }
+
+            if (result.status === 'success' && result.paymentStatus === 'SUCCESS') {
+                // Update transaction record
+                await transaction.ref.update({
+                    status: 'completed',
+                    paymentId: result.paymentId,
+                    paymentTransactionId: result.paymentItems[0].paymentTransactionId,
+                    lastUpdated: admin.firestore.FieldValue.serverTimestamp()
+                });
+
+                // Register user for event
+                const eventRef = db.doc(`events/${transaction.data().eventId}`);
+                const userRef = db.doc(`users/${transaction.data().userId}`);
+
+                await eventRef.update({
+                    registeredUsers: admin.firestore.FieldValue.arrayUnion(transaction.data().userId)
+                });
+
+                await userRef.update({
+                    registeredEvents: admin.firestore.FieldValue.arrayUnion(transaction.data().eventId)
+                });
+
+                res.json({ 
+                    status: 'success',
+                    eventId: transaction.data().eventId
+                });
+            } else {
+                await transaction.ref.update({
+                    status: 'failed',
+                    error: result.errorMessage,
+                    lastUpdated: admin.firestore.FieldValue.serverTimestamp()
+                });
+                res.status(400).json({ 
+                    status: 'failure', 
+                    errorMessage: result.errorMessage 
+                });
+            }
+        });
+    } catch (error) {
+        console.error('Payment result error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
 });
 
 // Cancel payment
