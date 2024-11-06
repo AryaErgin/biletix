@@ -98,20 +98,24 @@ const PendingEventDetail = () => {
 
   const submitRejection = async () => {
     if (!rejectionReason.trim()) {
-      setMessage('Please provide a reason for rejection.');
+      setMessage('Reddetme Sebebi Belirtiniz.');
       return;
     }
     try {
       await updateDoc(doc(db, 'events', eventId), {
         status: 'rejected',
-        rejectionReason: rejectionReason()
+        rejectionReason: rejectionReason,
+        rejectedAt: new Date().toISOString() // Add this to trigger the update
       });
+      
       setMessage('Event disapproved.');
       setShowRejectionModal(false);
+      
       setTimeout(() => {
         navigate('/etkinlik-onayla');
       }, 2000);
     } catch (error) {
+      console.error('Error disapproving event:', error);
       setMessage('Error disapproving event: ' + error.message);
     }
   };

@@ -20,12 +20,14 @@ import Header from './header/Header.jsx';
 import EmailVerification from './auth/EmailVerification.jsx';
 import { deleteUser } from 'firebase/auth';
 import MyEvents from './event/myevents/MyEvents.jsx';
-import { RejectedEventsProvider, useRejectedEvents } from './event/rejectedevent/RejectedEventsContext.jsx';
+import { RejectedEventsProvider } from './event/rejectedevent/RejectedEventsContext.jsx';
+import RejectedEventCheck from './event/rejectedevent/RejectedEventCheck';
 import RejectedEventNotification from './event/rejectedevent/RejectedEvent.jsx';
 import ResetPassword from './auth/resetpassword/ResetPassword.jsx';
 import RegisteredUsers from './event/myevents/RegisteredIUsers.jsx';
 import GoogleSignupComplete from './auth/GoogleSignUpComplete.jsx';
 import { ThemeProvider } from '../context/ThemeContext.jsx';
+import PaymentResult from '../server/PaymentResult.jsx';
 
 const UserChecker = ({ children }) => {
   const navigate = useNavigate();
@@ -57,22 +59,6 @@ const UserChecker = ({ children }) => {
   }
 
   return children;
-};
-
-const RejectedEventCheck = () => {
-  const { rejectedEvents } = useRejectedEvents();
-  const navigate = useNavigate();
-  const [hasChecked, setHasChecked] = useState(false);
-
-  useEffect(() => {
-    if (!hasChecked && rejectedEvents.length > 0) {
-      console.log('Found rejected events:', rejectedEvents);
-      navigate(`/etkinlik-reddedildi/${rejectedEvents[0].id}`);
-      setHasChecked(true);
-    }
-  }, [rejectedEvents, navigate, hasChecked]);
-
-  return null;
 };
 
 const App = () => {
@@ -174,8 +160,8 @@ const App = () => {
       };
 
     return (
-      <RejectedEventsProvider>
         <ThemeProvider>
+        <RejectedEventsProvider>
         <Router>
         <UserChecker>
           <div className="App">
@@ -218,6 +204,7 @@ const App = () => {
               <Route path={`/kayıtlı-kişiler/:eventId`} element={<RegisteredUsers/>}/>
               <Route path="/şifre-değiştirme" element={<ResetPassword />} />
               <Route path="google-kayıt-tamamla" element={<GoogleSignupComplete/>}/>
+              <Route path="/payment-result" element={<PaymentResult />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
             <Footer />
@@ -225,8 +212,8 @@ const App = () => {
           </div>
         </UserChecker>
         </Router>
-        </ThemeProvider>
         </RejectedEventsProvider>
+        </ThemeProvider>
     );
   };
   

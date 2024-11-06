@@ -2,16 +2,27 @@ const express = require('express');
 const Iyzipay = require('iyzipay');
 const router = express.Router();
 const { v4: uuidv4 } = require('uuid');
+const rateLimit = require("express-rate-limit");
+
+const paymentLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5 // limit each IP to 5 requests per windowMs
+});
 
 const iyzipay = new Iyzipay({
     apiKey: process.env.IYZICO_API_KEY,
     secretKey: process.env.IYZICO_SECRET_KEY,
-    uri: process.env.IYZICO_URI || 'https://sandbox-api.iyzipay.com'
+    uri: process.env.IYZICO_URL || 'https://sandbox-api.iyzipay.com'
 });
 
 // Create payment
-router.post('/create-payment', async (req, res) => {
+router.post('/create-payment', paymentLimiter, async (req, res) => {
     const { price, paidBy, eventId, eventName } = req.body;
+
+    const event = await Event.findById(req.body.eventId);
+    if (event.price !== req.body.price) {
+        return res.status(400).json({ error: 'Invalid payment amount' });
+    }
 
     const request = {
         locale: Iyzipay.LOCALE.TR,
@@ -19,41 +30,32 @@ router.post('/create-payment', async (req, res) => {
         price: price,
         paidPrice: price,
         currency: Iyzipay.CURRENCY.TRY,
-        installment: '1',
         basketId: eventId,
-        paymentChannel: Iyzipay.PAYMENT_CHANNEL.WEB,
         paymentGroup: Iyzipay.PAYMENT_GROUP.PRODUCT,
         callbackUrl: `${process.env.FRONTEND_URL}/payment-result`,
-        paymentCard: {
-            cardHolderName: req.body.cardHolderName,
-            cardNumber: req.body.cardNumber,
-            expireMonth: req.body.expireMonth,
-            expireYear: req.body.expireYear,
-            cvc: req.body.cvc,
-            registerCard: '0'
-        },
+        enabledInstallments: [1, 2, 3, 6, 9],
         buyer: {
             id: paidBy,
-            name: req.body.name,
-            surname: req.body.surname,
-            email: req.body.email,
-            identityNumber: req.body.identityNumber,
-            registrationAddress: req.body.address,
-            city: req.body.city,
-            country: req.body.country,
+            name: 'NOT_PROVIDED',
+            surname: 'NOT_PROVIDED',
+            email: 'NOT_PROVIDED',
+            identityNumber: '11111111111',
+            registrationAddress: 'NOT_PROVIDED',
+            city: 'NOT_PROVIDED',
+            country: 'Turkey',
             ip: req.ip
         },
         shippingAddress: {
-            contactName: `${req.body.name} ${req.body.surname}`,
-            city: req.body.city,
-            country: req.body.country,
-            address: req.body.address
+            contactName: 'NOT_PROVIDED',
+            city: 'NOT_PROVIDED',
+            country: 'Turkey',
+            address: 'NOT_PROVIDED'
         },
         billingAddress: {
-            contactName: `${req.body.name} ${req.body.surname}`,
-            city: req.body.city,
-            country: req.body.country,
-            address: req.body.address
+            contactName: 'NOT_PROVIDED',
+            city: 'NOT_PROVIDED',
+            country: 'Turkey',
+            address: 'NOT_PROVIDED'
         },
         basketItems: [
             {
@@ -67,30 +69,37 @@ router.post('/create-payment', async (req, res) => {
     };
 
     try {
-        iyzipay.payment.create(request, function (err, result) {
+        if (!req.body.price || !req.body.paidBy || !req.body.eventId) {
+            return res.status(400).json({ error: 'Missing required fields' });
+        }
+        
+        iyzipay.checkoutFormInitialize.create(request, function (err, result) {
             if (err) {
                 console.error('Iyzipay error:', err);
-                res.status(500).json({ error: 'An error occurred while processing the payment.' });
+                res.status(500).json({ error: 'An error occurred while initializing the payment.' });
             } else {
                 if (result.status === 'success') {
-                    res.json({ status: 'success', ...result });
+                    res.json({ status: 'success', checkoutFormContent: result.checkoutFormContent });
                 } else {
                     res.status(400).json({ status: 'failure', errorMessage: result.errorMessage });
                 }
             }
         });
     } catch (error) {
-        console.error('Server error:', error);
-        res.status(500).json({ error: 'An unexpected error occurred.' });
+        console.error('Payment error:', error);
+        res.status(500).json({ 
+          error: 'Ödeme Başarısız Oldu', 
+          details: error.message 
+        });
     }
 });
 
 // Retrieve payment result
-router.get('/payment-result', (req, res) => {
-    iyzipay.payment.retrieve({
+router.post('/payment-result', (req, res) => {
+    iyzipay.checkoutForm.retrieve({
         locale: Iyzipay.LOCALE.TR,
-        conversationId: req.query.conversationId,
-        paymentId: req.query.paymentId
+        conversationId: req.body.conversationId,
+        token: req.body.token
     }, function (err, result) {
         if (err) {
             console.error('Iyzipay error:', err);

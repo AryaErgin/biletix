@@ -1,3 +1,4 @@
+// RejectedEventsContext.jsx
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { auth, db } from '../../../firebase';
 import { collection, query, where, onSnapshot } from 'firebase/firestore';
@@ -10,23 +11,33 @@ export const RejectedEventsProvider = ({ children }) => {
   const [rejectedEvents, setRejectedEvents] = useState([]);
 
   useEffect(() => {
-    const user = auth.currentUser;
-    if (!user) return;
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if (!user) {
+        console.log('No user logged in');
+        return;
+      }
 
-    const eventsRef = collection(db, 'events');
-    const q = query(
-      eventsRef,
-      where('createdBy', '==', user.uid),
-      where('status', '==', 'rejected')
-    );
+      console.log('Setting up rejected events listener for user:', user.uid);
 
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const rejectedEventsList = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      setRejectedEvents(rejectedEventsList);
-      console.log('Rejected events updated:', rejectedEventsList); // Debug log
+      const eventsRef = collection(db, 'events');
+      const q = query(
+        eventsRef,
+        where('createdBy', '==', user.uid),
+        where('status', '==', 'rejected')
+      );
+
+      const listener = onSnapshot(q, (snapshot) => {
+        const rejectedEventsList = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        console.log('Rejected events updated:', rejectedEventsList);
+        setRejectedEvents(rejectedEventsList);
+      }, (error) => {
+        console.error('Error in rejected events listener:', error);
+      });
+
+      return () => listener();
     });
 
     return () => unsubscribe();
