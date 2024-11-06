@@ -125,7 +125,7 @@
 .registration-button:hover {
     transform: translateY(-0.1875rem);
     box-shadow: 0 0.5rem 1.5rem var(--shadow-secondary);
-    background: var(--color-background);
+    background: var(--color-text-secondary);
     color: transparent;
 }
 

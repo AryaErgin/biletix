@@ -84,6 +84,7 @@ const CreateEvent = () => {
   const [ageRange, setAgeRange] = useState('all');
   const [organizer, setOrganizer] = useState('');
   const [contactInfo, setContactInfo] = useState('');
+  const [price, setPrice] = useState(0);
 
   const handleMaxCapacityChange = (e) => {
     const value = parseInt(e.target.value);
@@ -186,6 +187,7 @@ const CreateEvent = () => {
         status: "pending",
         createdBy: user.uid,
         contactInfo,
+        price: parseFloat(price),
       });
 
       const eventId = eventDoc.id;
@@ -389,6 +391,19 @@ const CreateEvent = () => {
             placeholder="Etkinlik Bilgileri"
             required
           />
+
+        <div className="form-group">
+            <label>Ücret (TL):</label>
+            <input 
+                type="number" 
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+                min="0"
+                step="0.01"
+                placeholder="Etkinlik Ücreti"
+            />
+        </div>
+        
           <button type="submit" className='submit' data-text="Create Event">Create Event</button>
         </form>
         {error && (

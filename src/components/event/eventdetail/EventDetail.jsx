@@ -15,6 +15,21 @@ const EventDetail = () => {
     const [showSignInModal, setShowSignInModal] = useState(false);
     const [showCancelModal, setShowCancelModal] = useState(false);
     const navigate = useNavigate();
+    const [showPaymentModal, setShowPaymentModal] = useState(false);
+    const [paymentInfo, setPaymentInfo] = useState({ // New state
+        cardHolderName: '',
+        cardNumber: '',
+        expireMonth: '',
+        expireYear: '',
+        cvc: '',
+        name: '',
+        surname: '',
+        email: '',
+        identityNumber: '',
+        address: '',
+        city: '',
+        country: 'TR'
+    });
 
     useEffect(() => {
         const fetchEvent = async () => {
@@ -86,27 +101,73 @@ const EventDetail = () => {
             setShowSignInModal(true);
             return;
         }
-
+    
         if (isRegistered) {
             setShowCancelModal(true);
             return;
         }
-
-        await registerForEvent();
+    
+        if (event.registeredUsers && event.maxCapacity && event.registeredUsers.length >= event.maxCapacity) {
+            alert('Bu etkinlik dolu. Kayıt yapılamıyor.');
+            return;
+        }
+    
+        if (event.price > 0) {
+            setShowPaymentModal(true);
+        } else {
+            await registerForEvent();
+        }
     };
 
-    const registerForEvent = async () => {
-        const eventRef = doc(db, 'events', eventId);
-        const userRef = doc(db, 'users', auth.currentUser.uid);
+    const handlePayment = async () => {
+        try {
+            const response = await fetch('/api/create-payment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    ...paymentInfo,
+                    price: event.price,
+                    paidBy: auth.currentUser.uid,
+                    eventId: event.id,
+                    eventName: event.name
+                }),
+            });
 
-        await updateDoc(eventRef, {
-            registeredUsers: arrayUnion(auth.currentUser.uid)
-        });
-        await updateDoc(userRef, {
-            registeredEvents: arrayUnion(eventId)
-        });
+            const result = await response.json();
 
-        setIsRegistered(true);
+            if (result.status === 'success') {
+                await registerForEvent();
+                setIsRegistered(true);
+                setShowPaymentModal(false);
+            } else {
+                alert('Ödeme Başarısız Oldu. Lütfen Tekrar Deneyiniz.');
+            }
+        } catch (error) {
+            console.error('Payment error:', error);
+            alert('Ödeme İşlemi Esnasında Bir Hata Oluştu. Lütfen Tekrar Deneyiniz.');
+        }
+    };
+
+     const registerForEvent = async () => {
+        try {
+            const eventRef = doc(db, 'events', eventId);
+            const userRef = doc(db, 'users', auth.currentUser.uid);
+    
+            await updateDoc(eventRef, {
+                registeredUsers: arrayUnion(auth.currentUser.uid)
+            });
+            await updateDoc(userRef, {
+                registeredEvents: arrayUnion(eventId)
+            });
+    
+            setIsRegistered(true);
+            alert('Etkinliğe başarıyla kaydoldunuz!');
+        } catch (error) {
+            console.error('Error registering for event:', error);
+            alert('Etkinliğe kayıt olurken bir hata oluştu. Lütfen tekrar deneyin.');
+        }
     };
 
     const cancelRegistration = async () => {
@@ -196,9 +257,92 @@ const EventDetail = () => {
                     data-text={isRegistered ? 'Kaydınızı İptal Edin' : 'Etkinliğe Kaydolun'} 
                     onClick={handleRegistration}
                 >
-                    {isRegistered ? 'Kaydınızı İptal Edin' : 'Etkinliğe Kaydolun'}
+                    {isRegistered ? 'Kaydınızı İptal Edin' : 
+                    (event.price && event.price > 0 ? `Etkinliğe Kaydolun (${event.price} TL)` : 'Etkinliğe Kaydolun')}
                 </button>
-                )}
+            )}
+            
+            {showPaymentModal && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <h3>Ödeme Bilgileri</h3>
+                        <input
+                            type="text"
+                            placeholder="Card Holder Name"
+                            value={paymentInfo.cardHolderName}
+                            onChange={(e) => setPaymentInfo({...paymentInfo, cardHolderName: e.target.value})}
+                        />
+                        <input
+                            type="text"
+                            placeholder="Card Number"
+                            value={paymentInfo.cardNumber}
+                            onChange={(e) => setPaymentInfo({...paymentInfo, cardNumber: e.target.value})}
+                        />
+                        <input
+                            type="text"
+                            placeholder="Expire Month"
+                            value={paymentInfo.expireMonth}
+                            onChange={(e) => setPaymentInfo({...paymentInfo, expireMonth: e.target.value})}
+                        />
+                        <input
+                            type="text"
+                            placeholder="Expire Year"
+                            value={paymentInfo.expireYear}
+                            onChange={(e) => setPaymentInfo({...paymentInfo, expireYear: e.target.value})}
+                        />
+                        <input
+                            type="text"
+                            placeholder="CVC"
+                            value={paymentInfo.cvc}
+                            onChange={(e) => setPaymentInfo({...paymentInfo, cvc: e.target.value})}
+                        />
+                        <input
+                            type="text"
+                            placeholder="Name"
+                            value={paymentInfo.name}
+                            onChange={(e) => setPaymentInfo({...paymentInfo, name: e.target.value})}
+                        />
+                        <input
+                            type="text"
+                            placeholder="Surname"
+                            value={paymentInfo.surname}
+                            onChange={(e) => setPaymentInfo({...paymentInfo, surname: e.target.value})}
+                        />
+                        <input
+                            type="email"
+                            placeholder="Email"
+                            value={paymentInfo.email}
+                            onChange={(e) => setPaymentInfo({...paymentInfo, email: e.target.value})}
+                        />
+                        <input
+                            type="text"
+                            placeholder="Identity Number"
+                            value={paymentInfo.identityNumber}
+                            onChange={(e) => setPaymentInfo({...paymentInfo, identityNumber: e.target.value})}
+                        />
+                        <input
+                            type="text"
+                            placeholder="Address"
+                            value={paymentInfo.address}
+                            onChange={(e) => setPaymentInfo({...paymentInfo, address: e.target.value})}
+                        />
+                        <input
+                            type="text"
+                            placeholder="City"
+                            value={paymentInfo.city}
+                            onChange={(e) => setPaymentInfo({...paymentInfo, city: e.target.value})}
+                        />
+                        <input
+                            type="text"
+                            placeholder="Country"
+                            value={paymentInfo.country}
+                            onChange={(e) => setPaymentInfo({...paymentInfo, country: e.target.value})}
+                        />
+                        <button onClick={handlePayment}>Ödemeyi Tamamla</button>
+                        <button onClick={() => setShowPaymentModal(false)}>İptal</button>
+                    </div>
+                </div>
+            )}
 
             {showSignInModal && (
                 <div className="modal-overlay">
