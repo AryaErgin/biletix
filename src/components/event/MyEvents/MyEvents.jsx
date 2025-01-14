@@ -317,7 +317,7 @@ const MyEvents = () => {
                             <p><span>Konum:</span> {event.location}</p>
                             <p><span>Tarih:</span> {event.date}</p>
                             <p><span>Konteyjan Sınırı:</span> {event.maxCapacity}</p>
-                            <p><span>Yaş Aaralığı:</span> {event.ageRange}</p>
+                            <p><span>Yaş Aralığı:</span> {event.ageRange}</p>
                             <p><span>Organizatör:</span> {event.organizer}</p>
                             <div className="status-container">
                             <span>Etkinlik Durumu: </span>
@@ -448,6 +448,7 @@ const MyEvents = () => {
                             <div className="form-group">
                                 <label>Yaş Aralığı:</label>
                                 <select 
+                                    className='value-select'
                                     value={editingEvent.ageRange} 
                                     onChange={(e) => setEditingEvent({...editingEvent, ageRange: e.target.value})}
                                 >
@@ -474,6 +475,17 @@ const MyEvents = () => {
                                 onChange={(e) => setEditingEvent({...editingEvent, description: e.target.value})}
                             />
                         </div>
+
+                        <div className="form-group">
+                            <label><span>Kayıtlar Kapalı:</span>
+                            <input 
+                                type="checkbox" 
+                                checked={editingEvent.registrationDisabled} 
+                                onChange={(e) => setEditingEvent({...editingEvent, registrationDisabled: e.target.checked})}
+                            /></label>
+                        </div>
+
+
                             <button type="submit" className="btn btn-save">Değişiklikleri Kaydet</button>
                         </form>
                     </div>

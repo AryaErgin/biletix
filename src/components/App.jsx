@@ -198,7 +198,7 @@ const App = () => {
                     </div>
                         ) : (
                     <div className="no-events-message">
-                      <p>No events match your search criteria.</p>
+                      <p>Etkinlik Bulunamadı</p>
                     </div>
                     )}
                     

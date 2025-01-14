@@ -190,7 +190,7 @@ const EventDetail = () => {
                 ))}
             </div>
             
-            {!isPending && (
+            {!isPending && !event.registrationDisabled && (
                 <button 
                     className={`registration-button ${isRegistered ? 'registered' : ''}`}  
                     data-text={isRegistered ? 'Kaydınızı İptal Edin' : 'Etkinliğe Kaydolun'} 
@@ -206,8 +206,8 @@ const EventDetail = () => {
                         <h3>Giriş Yapın</h3>
                         <p>Etkinlik İçin Giriş Yapmanız Gerekmektedir</p>
                         <div className="modal-buttons">
-                            <button className="sign-in-btn" onClick={() => navigate('/giriş-yap')}>Sign In</button>
-                            <button className="cancel-btn" onClick={() => setShowSignInModal(false)}>Cancel</button>
+                            <button className="sign-in-btn" onClick={() => navigate('/giriş-yap')}>Giriş Yap</button>
+                            <button className="cancel-btn" onClick={() => setShowSignInModal(false)}>İptal</button>
                         </div>
                     </div>
                 </div>

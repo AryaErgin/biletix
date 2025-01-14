@@ -84,6 +84,8 @@ const CreateEvent = () => {
   const [ageRange, setAgeRange] = useState('all');
   const [organizer, setOrganizer] = useState('');
   const [contactInfo, setContactInfo] = useState('');
+  const [registrationDisabled, setRegistrationDisabled] = useState(false);
+
 
   const handleMaxCapacityChange = (e) => {
     const value = parseInt(e.target.value);
@@ -186,6 +188,7 @@ const CreateEvent = () => {
         status: "pending",
         createdBy: user.uid,
         contactInfo,
+        registrationDisabled,
       });
 
       const eventId = eventDoc.id;
@@ -287,6 +290,12 @@ const CreateEvent = () => {
       <div className="create-event">
         <h2>Yeni Etkinlik Oluştur</h2>
         
+        {error && (
+          <div className="message-container error">
+            <p>{error}</p>
+          </div>
+        )}
+
         <form onSubmit={handleCreateEvent}>
           <label>
             Etkinlik Hakkında Fotoğraf veya Video Ekleyin:
@@ -389,13 +398,22 @@ const CreateEvent = () => {
             placeholder="Etkinlik Bilgileri"
             required
           />
-          <button type="submit" className='submit' data-text="Create Event">Create Event</button>
+
+        <label>
+          <span>Kayıtları Kapa:</span>
+            <input
+              type="checkbox"
+              checked={registrationDisabled}
+              onChange={(e) => setRegistrationDisabled(e.target.checked)}
+            />
+            
+          </label>
+          
+          <button type="submit" className='submit' data-text="Etkinlik Oluştur">Etkinlik Oluştur</button>
+
+        
         </form>
-        {error && (
-          <div className="message-container error">
-            <p>{error}</p>
-          </div>
-        )}
+        
         {success && (
           <div className="message-container success">
             <p>{success}</p>
