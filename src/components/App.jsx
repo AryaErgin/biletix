@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import EventCard from './event/eventcard/EventCard.jsx';
 import FilterSection from './filtersection/FilterSection.jsx';
 import Footer from './footer/Footer.jsx';
@@ -66,7 +66,6 @@ const RejectedEventCheck = () => {
 
   useEffect(() => {
     if (!hasChecked && rejectedEvents.length > 0) {
-      console.log('Found rejected events:', rejectedEvents);
       navigate(`/etkinlik-reddedildi/${rejectedEvents[0].id}`);
       setHasChecked(true);
     }
@@ -80,6 +79,8 @@ const App = () => {
     const [filteredEvents, setFilteredEvents] = useState([]);
     const [isAdmin, setIsAdmin] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1);
+    const eventsPerPage = 6;
   
     useEffect(() => {
       const fetchEvents = async () => {
@@ -95,6 +96,28 @@ const App = () => {
 
       fetchEvents();
   }, []);
+
+  const sortedEvents = useMemo(() => {
+    return [...filteredEvents].sort((a, b) => new Date(b.date) - new Date(a.date));
+  }, [filteredEvents]);
+
+  // Calculate total pages for pagination.
+  const totalPages = Math.ceil(sortedEvents.length / eventsPerPage);
+
+  // Determine events for the current page.
+  const currentEvents = useMemo(() => {
+    const startIndex = (currentPage - 1) * eventsPerPage;
+    return sortedEvents.slice(startIndex, startIndex + eventsPerPage);
+  }, [sortedEvents, currentPage]);
+
+  // Handlers for pagination.
+  const handleNext = () => {
+    setCurrentPage(prev => Math.min(prev + 1, totalPages));
+  };
+
+  const handlePrevious = () => {
+    setCurrentPage(prev => Math.max(prev - 1, 1));
+  };
 
   useEffect(() => {
     const cleanupUnverifiedUsers = async () => {
@@ -118,11 +141,11 @@ const App = () => {
             }
             await deleteDoc(doc(db, 'users', userId));
           } catch (error) {
-            console.error(`Error deleting user ${userId}:`, error);
+            console.log(`Error`);
           }
         });
       } catch (error) {
-        console.error('Error cleaning up unverified users:', error);
+        console.error('Error');
       }
     };
 
@@ -156,6 +179,7 @@ const App = () => {
           event.name.toLowerCase().includes(query.toLowerCase())
         );
         setFilteredEvents(filtered);
+        setCurrentPage(1);
       };
     
       const handleFilter = (filters) => {
@@ -171,6 +195,7 @@ const App = () => {
           );
         });
         setFilteredEvents(filtered);
+        setCurrentPage(1);
       };
 
     return (
@@ -190,20 +215,32 @@ const App = () => {
                     <Search onSearch={handleSearch} />
                     <FilterSection onFilter={handleFilter} />
                     <MapComponent events={events} filteredEvents={filteredEvents} />
-                    {filteredEvents.length > 0 ? (
-                    <div className="event-grid">
-                      {filteredEvents.map(event => (
-                        <EventCard key={event.id} event={event} />
-                      ))}
-                    </div>
+                    {sortedEvents.length > 0 ? (
+                          <>
+                            <div className="event-grid">
+                              {currentEvents.map(event => (
+                                <EventCard key={event.id} event={event} />
+                              ))}
+                            </div>
+                            <div className="pagination">
+                              <button onClick={handlePrevious} disabled={currentPage === 1}>
+                               Önceki 
+                              </button>
+                              <span>
+                               {currentPage}. Sayfa 
+                              </span>
+                              <button onClick={handleNext} disabled={currentPage === totalPages}>
+                                Sonraki
+                              </button>
+                            </div>
+                          </>
                         ) : (
-                    <div className="no-events-message">
-                      <p>Etkinlik Bulunamadı</p>
-                    </div>
-                    )}
-                    
-                  </>
-                } 
+                          <div className="no-events-message">
+                            <p>Etkinlik Bulunamadı</p>
+                          </div>
+                        )}
+                      </>
+                    }
                 />
               <Route path="/giriş-yap" element={<Login />} />
               <Route path="/hesap-oluştur" element={<Signup />} />

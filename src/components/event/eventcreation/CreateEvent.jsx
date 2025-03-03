@@ -34,16 +34,37 @@ const MediaItem = ({ file, index, moveMedia, removeMedia, isThumbnail, selectThu
       <div className="media-preview-container">
         {typeof file === 'string' ? (
           file.includes('mp4') ? (
-            <video src={file} className="preview-media" controls />
+            <video
+              src={file}
+              className="preview-media"
+              controls
+              autoPlay={false} // Disable autoplay if necessary
+              muted={false}
+              onCanPlayThrough={(e) => {
+                e.target.muted = false; // Ensure audio is enabled on play
+              }}
+            />
           ) : (
             <img src={file} alt="preview" className="preview-media" />
           )
         ) : (
-          <img 
-            src={URL.createObjectURL(file)} 
-            alt="preview" 
-            className="preview-media" 
-          />
+          file.type.startsWith('video') ? (
+            <video
+              src={URL.createObjectURL(file)}
+              className="preview-media"
+              controls
+              muted
+              onLoadedMetadata={(e) => {
+                e.target.muted = false; // Ensure video plays with sound
+              }}
+            />
+          ) : (
+            <img 
+              src={URL.createObjectURL(file)} 
+              alt="preview" 
+              className="preview-media" 
+            />
+          )
         )}
         <button 
           type="button" 
@@ -205,6 +226,7 @@ const CreateEvent = () => {
         await uploadBytes(fileRef, file);
         const fileUrl = await getDownloadURL(fileRef);
         mediaUrls.push(fileUrl);
+
 
         if (i === thumbnailIndex) {
           thumbnailUrl = fileUrl;

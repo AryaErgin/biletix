@@ -29,16 +29,37 @@ const MediaItem = ({ file, index, moveMedia, removeMedia }) => {
       <div ref={(node) => ref(drop(node))} className="media-items">
         {typeof file === 'string' ? (
           file.includes('mp4') ? (
-            <video src={file} className="preview-media" controls />
+            <video
+              src={file}
+              className="preview-media"
+              controls
+              autoPlay={false} // Disable autoplay if necessary
+              muted={false}
+              onCanPlayThrough={(e) => {
+                e.target.muted = false; // Ensure audio is enabled on play
+              }}
+            />
           ) : (
             <img src={file} alt="preview" className="preview-media" />
           )
         ) : (
-          <img 
-            src={URL.createObjectURL(file)} 
-            alt="preview" 
-            className="preview-media" 
-          />
+          file.type.startsWith('video') ? (
+            <video
+              src={URL.createObjectURL(file)}
+              className="preview-media"
+              controls
+              muted
+              onLoadedMetadata={(e) => {
+                e.target.muted = false; // Ensure video plays with sound
+              }}
+            />
+          ) : (
+            <img 
+              src={URL.createObjectURL(file)} 
+              alt="preview" 
+              className="preview-media" 
+            />
+          )
         )}
         <button 
           type="button" 
@@ -201,6 +222,8 @@ const MyEvents = () => {
       
           // Handle media files
           const mediaUrls = [];
+          const removedMedia = editingEvent.mediaUrls.filter((url) => !editingMedia.includes(url));
+          
           for (let file of editingMedia) {
             if (file instanceof File) {
               // New file upload
@@ -241,6 +264,16 @@ const MyEvents = () => {
               }
             }
           }
+
+          for (let url of removedMedia) {
+            try {
+                const fileRef = ref(storage, url);
+                await deleteObject(fileRef);
+            } catch (error) {
+                console.error('Error deleting removed media:', error);
+            }
+        }
+
           
           updatedEvent.mediaUrls = mediaUrls;
           

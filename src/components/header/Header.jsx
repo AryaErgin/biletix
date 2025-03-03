@@ -50,7 +50,7 @@ const Header = () => {
       <div className="nav-container">
         <div className="logo-container">
           <img src={logo} alt="Your Logo" className="your-logo" />
-          <h1 className="integra-logo">SteamNearMe</h1>
+          <h1 className="integra-logo" translate="no">SteamNearMe</h1>
         </div>
         <div className={`hamburger ${isMenuOpen ? 'open' : ''}`} onClick={toggleMenu}>
           <span></span>
