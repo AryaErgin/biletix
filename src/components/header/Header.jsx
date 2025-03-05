@@ -69,9 +69,9 @@ const Header = () => {
           </a>
           {user ? (
             <>
-              <Link to="/etkinlik-oluştur" onClick={toggleMenu}>Etkinlik Oluştur</Link>
+              <Link to="/içerik-seç" onClick={toggleMenu}>İçerik Oluştur</Link>
               <Link to="/benim-etkinliklerim" onClick={toggleMenu}>Benim Etkinliklerim</Link>
-              {isAdmin && !loading && <Link to="/etkinlik-onayla" onClick={toggleMenu}>Etkinlik Onayla</Link>}
+              {isAdmin && !loading && <Link to="içerik-onayla" onClick={toggleMenu}>İçerik Onayla</Link>}
               <Link to="/profil" onClick={toggleMenu}>Profil</Link>
               <button 
                 onClick={toggleTheme}

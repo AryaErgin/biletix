@@ -1,0 +1,69 @@
+/* ResourceCard.css */
+.resource-link {
+    text-decoration: none;
+    color: var(--color-text-primary);
+}
+
+.resource-image {
+    width: 100%;
+    height: 12.5rem;
+    overflow: hidden;
+    border-radius: 0.9375rem;
+    margin-bottom: 0.9375rem;
+}
+
+.resource-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0.9375rem;
+}
+
+.resource-details {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.resource-details h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.625rem;
+    color: var(--color-text-primary);
+}
+
+.resource-details .resource-date {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 0.3125rem;
+}
+
+.resource-details .resource-author {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+}
+
+/* Layout container (if using a grid) */
+.resource-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    padding: 1.25rem;
+}
+
+/* Hover effect similar to event card */
+.resource-link:hover .resource-card {
+    box-shadow: var(--shadow-secondary);
+    transform: translateY(-0.3125rem);
+    transition: var(--theme-transition);
+}
+
+/* Wrap individual resource card content */
+.resource-card {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-surface);
+    border: 0.125rem solid var(--color-primary);
+    border-radius: 0.9375rem;
+    box-shadow: var(--shadow-primary);
+    padding: 0.9375rem;
+    transition: var(--theme-transition);
+}

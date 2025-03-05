@@ -1,0 +1,177 @@
+/* ResourceConfirm.css */
+.resource-confirmation {
+    padding: 1.25rem;
+    max-width: 75rem;
+    margin: 0 auto;
+}
+
+.resource-confirmation h2 {
+    text-align: center;
+    color: var(--color-text-primary);
+    font-size: 2.25rem;
+    margin-bottom: 1.875rem;
+}
+
+.pending-resources-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    padding: 1.25rem;
+}
+
+.pending-resource-card {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-surface);
+    border: 0.125rem solid var(--color-primary);
+    border-radius: 0.9375rem;
+    box-shadow: var(--shadow-primary);
+    padding: 0.9375rem;
+    text-decoration: none;
+    color: var(--color-text-primary);
+    transition: var(--theme-transition);
+}
+
+.pending-resource-card:hover {
+    box-shadow: var(--shadow-secondary);
+    transform: translateY(-0.3125rem);
+    transition: var(--theme-transition);
+}
+
+.pending-resource-card .resource-image {
+    width: 100%;
+    height: 12.5rem;
+    overflow: hidden;
+    border-radius: 0.625rem;
+    margin-bottom: 0.9375rem;
+}
+
+.pending-resource-card .resource-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0.625rem;
+}
+
+.pending-resource-card .resource-details {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.pending-resource-card .resource-details h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.625rem;
+    color: var(--color-text-primary);
+}
+
+.pending-resource-card .resource-details p {
+    margin: 0.3125rem 0;
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 0.3125rem 0.625rem;
+    border-radius: 0.9375rem;
+    font-size: 0.75rem;
+    font-weight: bold;
+    margin-bottom: 0.625rem;
+    background-color: var(--color-primary);
+    color: var(--color-text-contrast);
+}
+
+/* Responsive adjustments */
+@media (max-width: 75rem) {
+    .pending-resources-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 64rem) {
+    .pending-resources-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .resource-confirmation h2 {
+        font-size: 2rem;
+    }
+    .pending-resource-card {
+        padding: 0.875rem;
+    }
+}
+
+@media (max-width: 48rem) {
+    .pending-resources-grid {
+        grid-template-columns: 1fr;
+    }
+    .resource-confirmation h2 {
+        font-size: 1.75rem;
+    }
+    .pending-resource-card {
+        padding: 0.75rem;
+    }
+}
+
+@media (max-width: 40rem) {
+    .resource-confirmation h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .pending-resource-card {
+        padding: 0.625rem;
+    }
+    .pending-resource-card .resource-details h3 {
+        font-size: 1.125rem;
+    }
+    .pending-resource-card .resource-details p {
+        font-size: 0.8125rem;
+    }
+    .status-badge {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+    }
+}
+
+@media (max-width: 30rem) {
+    .resource-confirmation h2 {
+        font-size: 1.375rem;
+    }
+    .pending-resource-card {
+        padding: 0.5rem;
+    }
+    .pending-resource-card .resource-image {
+        height: 10rem;
+    }
+    .pending-resource-card .resource-details h3 {
+        font-size: 1rem;
+    }
+    .pending-resource-card .resource-details p {
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 20rem) {
+    .resource-confirmation {
+        padding: 1rem 0.5rem;
+    }
+    .resource-confirmation h2 {
+        font-size: 1.25rem;
+    }
+    .pending-resource-card {
+        padding: 0.375rem;
+        border-radius: 0.625rem;
+    }
+    .pending-resource-card .resource-image {
+        height: 8rem;
+    }
+    .pending-resource-card .resource-details h3 {
+        font-size: 0.875rem;
+    }
+    .pending-resource-card .resource-details p {
+        font-size: 0.6875rem;
+    }
+    .status-badge {
+        font-size: 0.625rem;
+        padding: 0.1875rem 0.375rem;
+    }
+}

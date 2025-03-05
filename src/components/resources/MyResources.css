@@ -1,0 +1,231 @@
+/* MyResources.css */
+.my-resources {
+    max-width: 75rem;
+    margin: 3.75rem auto;
+    padding: 2.5rem;
+    background: var(--color-background-gradient);
+    border-radius: 1.25rem;
+    box-shadow: 0 1rem 2rem var(--shadow-primary);
+  }
+  
+  .resource-item {
+    display: flex;
+    align-items: center;
+    background: var(--color-surface);
+    border: 0.125rem solid var(--color-primary);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .resource-thumbnail {
+    width: 8rem;
+    height: 8rem;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    margin-right: 1.5rem;
+    flex-shrink: 0;
+  }
+  
+  .resource-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  
+  .resource-item:hover .resource-thumbnail img {
+    transform: scale(1.1);
+  }
+  
+  .resource-content {
+    flex-grow: 1;
+  }
+  
+  .resource-item h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: var(--color-text-secondary);
+    font-weight: 600;
+  }
+  
+  .resource-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .resource-info p {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+    color: var(--color-text-tertiary);
+  }
+  
+  .resource-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 2rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  
+  .btn-view {
+    background: var(--color-primary-gradient);
+    color: var(--color-text-primary);
+  }
+  
+  .btn-edit {
+    background: var(--color-edit-profile);
+    color: var(--color-text-contrast);
+  }
+  
+  .btn-delete {
+    background: var(--color-delete-account);
+    color: var(--color-text-contrast);
+  }
+  
+  /* Edit resource popup overlay */
+  .edit-resource-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .edit-resource-form {
+    background: var(--color-surface);
+    padding: 2rem;
+    border-radius: 1rem;
+    width: 100%;
+    max-width: 50rem;
+    box-shadow: 0 0.5rem 2rem var(--shadow-primary);
+    position: relative;
+  }
+  
+  .edit-form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  
+  .close-button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--color-text-tertiary);
+  }
+  
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  .media-upload-label {
+    display: block;
+    color: var(--color-text-secondary);
+    font-size: 1rem;
+    margin-bottom: 0.625rem;
+    font-weight: 600;
+  }
+  
+  .media-upload-input {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--color-background);
+    border: 0.125rem solid var(--color-border);
+    border-radius: 0.5rem;
+    color: var(--color-text-primary);
+  }
+  
+  .media-previews {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem;
+    margin-top: 0.625rem;
+    padding: 1rem;
+    background-color: var(--color-background);
+    border-radius: 0.625rem;
+    box-shadow: 0 0.25rem 0.5rem var(--shadow-primary);
+  }
+  
+  /* Delete confirmation overlay */
+  .delete-confirmation-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+  }
+  
+  .delete-confirmation {
+    background: var(--color-background-gradient);
+    padding: 2.5rem;
+    border-radius: 1.25rem;
+    box-shadow: 0 1rem 3rem var(--shadow-primary);
+    width: 90%;
+    max-width: 31.25rem;
+    text-align: center;
+  }
+  
+  .btn-group {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+  
+  .btn-confirm {
+    background: var(--color-delete-account);
+    color: var(--color-text-contrast);
+    padding: 1rem 2rem;
+    border-radius: 2rem;
+    border: none;
+    cursor: pointer;
+    width: 45%;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-cancel {
+    background: var(--color-cancel);
+    color: var(--color-text-contrast);
+    padding: 1rem 2rem;
+    border-radius: 2rem;
+    border: none;
+    cursor: pointer;
+    width: 45%;
+    transition: all 0.3s ease;
+  }
+  
